@@ -1,0 +1,144 @@
+version: "3.9"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# StockPulse AI Analyzer — Full-stack Docker Compose
+#
+# Folder layout (all siblings of this file):
+#   analyzer-frontend/          → Next.js UI
+#   analyzer backend/           → Spring Boot REST API
+#   prediction model training/  → Flask + TensorFlow LLM prediction service
+#
+# Services:
+#   db         → PostgreSQL 16
+#   backend    → Spring Boot (port 8080)
+#   llm        → Flask prediction service (port 5000)
+#   frontend   → Next.js (port 3000)
+#   nginx      → Reverse proxy + SSL (ports 80 / 443)
+#
+# Quick start:
+#   1. cp .env.example .env  →  fill in your secrets
+#   2. docker compose up --build
+# ─────────────────────────────────────────────────────────────────────────────
+
+services:
+
+  # ──────────────────────────── DATABASE ──────────────────────────────────────
+  db:
+    image: postgres:16-alpine
+    container_name: stockpulse_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB:       ${POSTGRES_DB:-stock_db}
+      POSTGRES_USER:     ${POSTGRES_USER:-admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    # Port 5432 intentionally NOT exposed to the host — db is only accessible
+    # within the Docker network. Avoids conflicts with a local Postgres instance.
+    # Uncomment below only if you need direct DB access from host tools:
+    # ports:
+    #   - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-admin} -d ${POSTGRES_DB:-stock_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - internal
+
+  # ──────────────────────────── SPRING BOOT BACKEND ───────────────────────────
+  backend:
+    build:
+      context: "./analyzer backend"
+      dockerfile: Dockerfile
+    container_name: stockpulse_backend
+    restart: unless-stopped
+    environment:
+      # PostgreSQL — "db" is the Docker service name, resolved internally
+      DB_HOST:              db
+      DB_PORT:              5432
+      POSTGRES_DB:          ${POSTGRES_DB:-stock_db}
+      POSTGRES_USER:        ${POSTGRES_USER:-admin}
+      POSTGRES_PASSWORD:    ${POSTGRES_PASSWORD}
+      # Flyway migrations run on startup
+      SPRING_FLYWAY_URL:    jdbc:postgresql://db:5432/${POSTGRES_DB:-stock_db}
+      SPRING_FLYWAY_USER:   ${POSTGRES_USER:-admin}
+      SPRING_FLYWAY_PASSWORD: ${POSTGRES_PASSWORD}
+      # JWT
+      JWT_SECRET:           ${JWT_SECRET}
+      JWT_EXPIRATION_MS:    ${JWT_EXPIRATION_MS:-180000000}
+      # Google Gemini AI (Spring AI)
+      GOOGLE_GENAI_API_KEY: ${GOOGLE_GENAI_API_KEY}
+      GEMINI_MODEL:         ${GEMINI_MODEL:-gemini-2.5-flash}
+      # Third-party data APIs
+      FINANCIAL_MODELING_PREP_API_KEY: ${FINANCIAL_MODELING_PREP_API_KEY}
+      FINNHUB_API_KEY:      ${FINNHUB_API_KEY}
+      # Internal URL of the Flask prediction service
+      LLM_SERVICE_URL:      http://llm:5000
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - internal
+
+  # ──────────────────────────── FLASK LLM SERVICE ─────────────────────────────
+  llm:
+    build:
+      context: "./prediction model training"
+      dockerfile: Dockerfile
+    container_name: stockpulse_llm
+    restart: unless-stopped
+    environment:
+      FLASK_ENV: production
+    # The .h5 model file is large — mount it from the host so it
+    # does not need to be re-copied on every rebuild.
+    volumes:
+      - "./prediction model training/stock_dl_model_2.h5:/app/stock_dl_model_2.h5:ro"
+    networks:
+      - internal
+
+  # ──────────────────────────── NEXT.JS FRONTEND ──────────────────────────────
+  frontend:
+    build:
+      context: ./analyzer-frontend
+      dockerfile: Dockerfile
+      args:
+        # NEXT_PUBLIC_* vars are baked into the JS bundle at build time
+        NEXT_PUBLIC_API_URL:         ${NEXT_PUBLIC_API_URL:-http://localhost/api}
+        NEXT_PUBLIC_FINNHUB_API_KEY: ${NEXT_PUBLIC_FINNHUB_API_KEY}
+    container_name: stockpulse_frontend
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT:     3000
+    depends_on:
+      - backend
+    networks:
+      - internal
+    # No host port exposed — traffic comes only through nginx
+
+  # ──────────────────────────── NGINX REVERSE PROXY ───────────────────────────
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: stockpulse_nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      # For production HTTPS, also mount TLS certs:
+      # - ./nginx/certs:/etc/nginx/certs:ro
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - internal
+
+# ─────────────────────────── VOLUMES & NETWORKS ──────────────────────────────
+volumes:
+  db_data:
+
+networks:
+  internal:
+    driver: bridge

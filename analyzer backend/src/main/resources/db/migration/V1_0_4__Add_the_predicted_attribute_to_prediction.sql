@@ -1,0 +1,1 @@
+ALTER TABLE predictions ADD COLUMN predicted FLOAT;

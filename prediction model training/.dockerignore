@@ -1,0 +1,15 @@
+.venv
+.venv2
+.venv311
+.idea
+.ipynb_checkpoints
+__pycache__
+*.ipynb
+model_training.ipynb
+data_converted_to_csv.csv
+iframe_figures
+test_output.txt
+*.h5
+README.md
+setup_and_run.ps1
+smoke_test_api.py

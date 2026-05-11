@@ -1,0 +1,57 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem; /* lg */
+  font-weight: 700; /* bold */
+  font-family: inherit;
+  font-size: 0.875rem; /* text-sm */
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.button:active {
+  transform: scale(0.98);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Variants */
+.primary {
+  background-color: var(--primary);
+  color: #fff;
+}
+
+.primary:hover:not(:disabled) {
+  background-color: rgba(var(--primary-rgb), 0.9);
+}
+
+.secondary {
+  background-color: rgba(var(--primary-rgb), 0.1);
+  color: var(--primary);
+}
+
+.secondary:hover:not(:disabled) {
+  background-color: rgba(var(--primary-rgb), 0.2);
+}
+
+.ghost {
+  background-color: transparent;
+  color: var(--color-text-muted);
+}
+
+.ghost:hover:not(:disabled) {
+  color: var(--primary);
+  background-color: rgba(var(--primary-rgb), 0.05);
+}
+
+/* Glow Effect */
+.glow.primary {
+  box-shadow: 0 0 20px rgba(var(--primary-rgb), 0.4);
+}

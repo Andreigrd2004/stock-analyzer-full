@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>StockPulse - Watchlist &amp; Predictions</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#8c2bee",
+                        "background-light": "#f7f6f8",
+                        "background-dark": "#191022",
+                        "surface-dark": "#251a31",
+                        "accent-green": "#22c55e",
+                        "accent-red": "#ef4444"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #4d3267;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased font-display">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-primary/20 bg-background-light dark:bg-background-dark px-6 md:px-10 py-4 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<div class="size-8 bg-primary/10 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">monitoring</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-xl font-bold leading-tight tracking-tight">StockPulse</h2>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary text-sm font-medium transition-colors" href="#">Portfolio</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary text-sm font-medium transition-colors" href="#">Market</a>
+<a class="text-primary text-sm font-semibold border-b-2 border-primary pb-1" href="#">Analysis</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<label class="hidden sm:flex flex-col min-w-40 h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full bg-slate-200 dark:bg-surface-dark border border-transparent focus-within:border-primary/50 transition-all">
+<div class="text-slate-500 dark:text-slate-400 flex items-center justify-center pl-3">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="w-full bg-transparent border-none focus:ring-0 text-slate-900 dark:text-white placeholder:text-slate-500 text-sm pl-2" placeholder="Search markets..." value=""/>
+</div>
+</label>
+<div class="flex items-center gap-3">
+<button class="text-slate-500 dark:text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="bg-primary/20 rounded-full p-0.5 border-2 border-primary/30">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8" data-alt="User profile avatar placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuACxtFHvAQKUuKnwQ2PaKHC43M20ZhIUU3lBsLPLRUern2lbtavNxZbBiIgwM7XIFrIgj-bz9OhU8pEpISKgdBvd2AHFqDQp7qpX50a5z3OAsn4reNLmG6tgbOEI9vIjnUTWAaC0OPqdt5K6pW87amLkGgf__717mvwfYLSjtbejx7tsV7NecF7cG-enXE9NyxfHCjXys9CCWvVeSDSlSihkIzf0YTxh9lk_a_j6oFwnNolkBWYc5lPKgdHbHoXuV4xT8tWENxbLVI");'></div>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-1 flex flex-col max-w-7xl mx-auto w-full px-4 md:px-10 py-8 gap-8">
+<!-- Summary Header -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-white dark:bg-surface-dark p-6 rounded-xl border border-slate-200 dark:border-primary/10 shadow-sm">
+<p class="text-slate-500 dark:text-slate-400 text-xs font-semibold uppercase tracking-wider">Watchlist Value</p>
+<div class="flex items-end gap-2 mt-1">
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white">$42,890.12</h3>
+<span class="text-accent-green text-sm font-medium mb-1">+2.4%</span>
+</div>
+</div>
+<div class="bg-white dark:bg-surface-dark p-6 rounded-xl border border-slate-200 dark:border-primary/10 shadow-sm">
+<p class="text-slate-500 dark:text-slate-400 text-xs font-semibold uppercase tracking-wider">Prediction Accuracy</p>
+<div class="flex items-end gap-2 mt-1">
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white">84.2%</h3>
+<span class="text-primary text-sm font-medium mb-1">Top 5% AI</span>
+</div>
+</div>
+<div class="bg-white dark:bg-surface-dark p-6 rounded-xl border border-slate-200 dark:border-primary/10 shadow-sm">
+<p class="text-slate-500 dark:text-slate-400 text-xs font-semibold uppercase tracking-wider">Active Alerts</p>
+<div class="flex items-end gap-2 mt-1">
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white">12</h3>
+<span class="text-slate-400 text-sm font-medium mb-1">Across 4 Stocks</span>
+</div>
+</div>
+</section>
+<!-- Dual Pane Layout -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Left Pane: Watchlist -->
+<div class="lg:col-span-5 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h2 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">visibility</span>
+                            My Watchlist
+                        </h2>
+<button class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">add</span> Add Stock
+                        </button>
+</div>
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-primary/10 overflow-hidden shadow-sm">
+<!-- Search Bar -->
+<div class="p-4 border-b border-slate-200 dark:border-primary/10">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="w-full bg-slate-50 dark:bg-background-dark/50 border border-slate-200 dark:border-primary/20 rounded-lg py-2 pl-10 pr-4 text-sm focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Filter watchlist..." type="text"/>
+</div>
+</div>
+<!-- Watchlist Items -->
+<div class="divide-y divide-slate-100 dark:divide-primary/5">
+<!-- Item 1 -->
+<div class="p-4 hover:bg-slate-50 dark:hover:bg-primary/5 transition-colors group cursor-pointer">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-lg bg-slate-100 dark:bg-background-dark flex items-center justify-center font-bold text-primary">AAPL</div>
+<div>
+<h4 class="font-bold text-sm">Apple Inc.</h4>
+<p class="text-xs text-slate-500">NASDAQ</p>
+</div>
+</div>
+<div class="text-right">
+<div class="font-bold text-sm">$189.43</div>
+<div class="text-accent-green text-xs font-medium">+1.24%</div>
+</div>
+<button class="text-slate-400 hover:text-accent-red transition-colors opacity-0 group-hover:opacity-100 ml-4">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="p-4 hover:bg-slate-50 dark:hover:bg-primary/5 transition-colors group cursor-pointer">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-lg bg-slate-100 dark:bg-background-dark flex items-center justify-center font-bold text-primary">TSLA</div>
+<div>
+<h4 class="font-bold text-sm">Tesla, Inc.</h4>
+<p class="text-xs text-slate-500">NASDAQ</p>
+</div>
+</div>
+<div class="text-right">
+<div class="font-bold text-sm">$242.15</div>
+<div class="text-accent-red text-xs font-medium">-0.82%</div>
+</div>
+<button class="text-slate-400 hover:text-accent-red transition-colors opacity-0 group-hover:opacity-100 ml-4">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="p-4 hover:bg-slate-50 dark:hover:bg-primary/5 transition-colors group cursor-pointer">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-lg bg-slate-100 dark:bg-background-dark flex items-center justify-center font-bold text-primary">BTC</div>
+<div>
+<h4 class="font-bold text-sm">Bitcoin</h4>
+<p class="text-xs text-slate-500">Crypto</p>
+</div>
+</div>
+<div class="text-right">
+<div class="font-bold text-sm">$64,120</div>
+<div class="text-accent-green text-xs font-medium">+4.51%</div>
+</div>
+<button class="text-slate-400 hover:text-accent-red transition-colors opacity-0 group-hover:opacity-100 ml-4">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="p-4 hover:bg-slate-50 dark:hover:bg-primary/5 transition-colors group cursor-pointer">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-lg bg-slate-100 dark:bg-background-dark flex items-center justify-center font-bold text-primary">NVDA</div>
+<div>
+<h4 class="font-bold text-sm">NVIDIA Corp.</h4>
+<p class="text-xs text-slate-500">NASDAQ</p>
+</div>
+</div>
+<div class="text-right">
+<div class="font-bold text-sm">$485.20</div>
+<div class="text-accent-green text-xs font-medium">+2.14%</div>
+</div>
+<button class="text-slate-400 hover:text-accent-red transition-colors opacity-0 group-hover:opacity-100 ml-4">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+</div>
+<div class="p-4 bg-slate-50 dark:bg-background-dark/30 text-center">
+<button class="text-xs font-bold text-primary uppercase tracking-tighter hover:underline">View All 18 Assets</button>
+</div>
+</div>
+</div>
+<!-- Right Pane: Prediction History -->
+<div class="lg:col-span-7 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h2 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">history</span>
+                            Prediction History
+                        </h2>
+<div class="flex items-center gap-2">
+<span class="text-xs text-slate-500 font-medium">Sort by:</span>
+<select class="bg-transparent border-none text-xs font-bold text-primary focus:ring-0 cursor-pointer">
+<option>Recent</option>
+<option>Accuracy</option>
+<option>Symbol</option>
+</select>
+</div>
+</div>
+<div class="space-y-4">
+<!-- Prediction Card 1 -->
+<div class="bg-white dark:bg-surface-dark p-5 rounded-xl border border-slate-200 dark:border-primary/10 shadow-sm relative overflow-hidden">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div class="flex items-center gap-4">
+<div class="size-12 rounded-full border-2 border-accent-green flex items-center justify-center text-accent-green bg-accent-green/10">
+<span class="material-symbols-outlined">trending_up</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h4 class="font-bold text-base">AAPL Prediction</h4>
+<span class="bg-accent-green/10 text-accent-green text-[10px] font-bold px-2 py-0.5 rounded-full uppercase border border-accent-green/20">Accurate</span>
+</div>
+<p class="text-xs text-slate-500">Oct 24, 2023 • AI Signal: <span class="text-primary font-bold">Strong Buy</span></p>
+</div>
+</div>
+<div class="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-2">
+<div class="text-right">
+<p class="text-[10px] text-slate-400 uppercase font-bold tracking-widest leading-none">Price Change</p>
+<p class="text-lg font-bold text-accent-green">+5.2% <span class="text-xs font-normal text-slate-400">(48h)</span></p>
+</div>
+<button class="text-primary text-xs font-bold flex items-center gap-1 hover:underline">
+                                        Details <span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Prediction Card 2 -->
+<div class="bg-white dark:bg-surface-dark p-5 rounded-xl border border-slate-200 dark:border-primary/10 shadow-sm relative overflow-hidden">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div class="flex items-center gap-4">
+<div class="size-12 rounded-full border-2 border-accent-red flex items-center justify-center text-accent-red bg-accent-red/10">
+<span class="material-symbols-outlined">trending_down</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h4 class="font-bold text-base">TSLA Prediction</h4>
+<span class="bg-accent-red/10 text-accent-red text-[10px] font-bold px-2 py-0.5 rounded-full uppercase border border-accent-red/20">Missed</span>
+</div>
+<p class="text-xs text-slate-500">Oct 20, 2023 • AI Signal: <span class="text-slate-400 font-bold">Neutral / Sell</span></p>
+</div>
+</div>
+<div class="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-2">
+<div class="text-right">
+<p class="text-[10px] text-slate-400 uppercase font-bold tracking-widest leading-none">Price Change</p>
+<p class="text-lg font-bold text-accent-green">+2.1% <span class="text-xs font-normal text-slate-400">(24h)</span></p>
+</div>
+<button class="text-primary text-xs font-bold flex items-center gap-1 hover:underline">
+                                        Details <span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Prediction Card 3 -->
+<div class="bg-white dark:bg-surface-dark p-5 rounded-xl border border-slate-200 dark:border-primary/10 shadow-sm relative overflow-hidden">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div class="flex items-center gap-4">
+<div class="size-12 rounded-full border-2 border-accent-green flex items-center justify-center text-accent-green bg-accent-green/10">
+<span class="material-symbols-outlined">trending_up</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h4 class="font-bold text-base">BTC Prediction</h4>
+<span class="bg-accent-green/10 text-accent-green text-[10px] font-bold px-2 py-0.5 rounded-full uppercase border border-accent-green/20">Accurate</span>
+</div>
+<p class="text-xs text-slate-500">Oct 18, 2023 • AI Signal: <span class="text-primary font-bold">Buy</span></p>
+</div>
+</div>
+<div class="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-2">
+<div class="text-right">
+<p class="text-[10px] text-slate-400 uppercase font-bold tracking-widest leading-none">Price Change</p>
+<p class="text-lg font-bold text-accent-green">+12.4% <span class="text-xs font-normal text-slate-400">(7d)</span></p>
+</div>
+<button class="text-primary text-xs font-bold flex items-center gap-1 hover:underline">
+                                        Details <span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Load More -->
+<div class="flex justify-center pt-2">
+<button class="flex items-center gap-2 text-slate-500 hover:text-primary text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-lg">expand_more</span> Load Older Predictions
+                            </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Bottom Insights -->
+<section class="mt-8 bg-primary/10 border border-primary/20 rounded-2xl p-8 overflow-hidden relative">
+<div class="relative z-10 max-w-2xl">
+<h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">AI Sentiment Analysis</h2>
+<p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-6">
+                        Our AI models are currently detecting a bullish divergence in the tech sector. Watchlist items like AAPL and NVDA show high probability of maintaining current momentum over the next 14 trading days.
+                    </p>
+<div class="flex gap-4">
+<button class="bg-primary text-white font-bold py-3 px-8 rounded-lg shadow-lg shadow-primary/30 hover:scale-[1.02] transition-transform">Get Full Report</button>
+<button class="bg-white/5 dark:bg-white/10 backdrop-blur-md border border-white/20 text-slate-900 dark:text-white font-bold py-3 px-8 rounded-lg hover:bg-white/20 transition-all">Dismiss</button>
+</div>
+</div>
+<!-- Abstract Background Ornament -->
+<div class="absolute right-0 top-0 h-full w-1/3 opacity-20 pointer-events-none overflow-hidden">
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-gradient-to-br from-primary to-transparent rounded-full blur-[80px]"></div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="border-t border-primary/10 mt-12 py-8 bg-slate-50 dark:bg-background-dark/50">
+<div class="max-w-7xl mx-auto px-10 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">monitoring</span>
+<span class="font-bold text-slate-900 dark:text-white">StockPulse</span>
+</div>
+<div class="flex gap-8 text-sm font-medium text-slate-500">
+<a class="hover:text-primary transition-colors" href="#">Documentation</a>
+<a class="hover:text-primary transition-colors" href="#">API</a>
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms</a>
+</div>
+<p class="text-xs text-slate-500">© 2023 StockPulse AI Analytics. All rights reserved.</p>
+</div>
+</footer>
+</div>
+</body></html>

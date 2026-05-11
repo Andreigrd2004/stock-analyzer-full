@@ -1,0 +1,45 @@
+.wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.icon {
+  position: absolute;
+  left: 0.75rem; /* left-3 */
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-muted); /* text-slate-500 */
+  font-size: 1.25rem; /* text-xl */
+  pointer-events: none;
+}
+
+.input {
+  width: 100%;
+  background-color: rgba(var(--primary-rgb), 0.1); /* fallback to bg-primary/10 */
+  border: 1px solid transparent;
+  border-radius: 0.5rem; /* rounded-lg */
+  padding: 0.5rem 1rem; /* py-2 pr-4 */
+  color: var(--color-text);
+  font-size: 0.875rem; /* text-sm */
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.withIcon {
+  padding-left: 2.75rem; /* pl-11 */
+}
+
+.input::placeholder {
+  color: var(--color-text-muted); /* placeholder:text-slate-500 */
+}
+
+.input:focus {
+  border-color: var(--primary); /* focus:border-primary */
+  box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.5); /* focus:ring-2 focus:ring-primary/50 */
+}
+
+/* Auth variant specific class if needed later */
+.input.darkAuth {
+  background-color: rgba(25, 16, 34, 0.5); /* bg-background-dark/50 */
+  border-color: rgba(var(--primary-rgb), 0.2); /* border-primary/20 */
+}

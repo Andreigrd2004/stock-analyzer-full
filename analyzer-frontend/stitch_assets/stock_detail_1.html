@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#8c2bee",
+                        "background-light": "#f7f6f8",
+                        "background-dark": "#191022",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<title>AAPL Stock Detail | Gemini AI Analysis</title>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .dashed-path {
+                stroke-dasharray: 6 6;
+            }
+            .collapse-content {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-out;
+            }
+            .group:hover .collapse-content {
+                max-height: 500px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<header class="border-b border-primary/20 bg-background-light/50 dark:bg-background-dark/50 backdrop-blur-md sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined">query_stats</span>
+</div>
+<div>
+<h2 class="text-lg font-bold leading-tight tracking-tight">AAPL</h2>
+<p class="text-xs text-slate-500 dark:text-slate-400">Apple Inc.</p>
+</div>
+</div>
+<div class="flex-1 max-w-md hidden md:block">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary">search</span>
+<input class="w-full bg-primary/10 border-none rounded-lg pl-10 pr-4 py-2 focus:ring-2 focus:ring-primary text-sm transition-all outline-none" placeholder="Search stocks, news, or AI insights..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 hover:bg-primary/10 rounded-lg text-slate-400 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 hover:bg-primary/10 rounded-lg text-slate-400 transition-colors">
+<span class="material-symbols-outlined">star</span>
+</button>
+<div class="w-10 h-10 rounded-full border-2 border-primary/30 p-0.5 ml-2 overflow-hidden bg-primary/20">
+<img alt="User Profile" class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjNsOAyuXg0cKFwMUF7qt22cMoH454-N8BquUuOHwPtBauapRe7De57XHhJvaTEmK8iCYfRGrg5jnkq1x-7cUei2KkmjINvI5UJcnHAPasIC2o7c-iR0j_kvMUtYFTij7GdMQpdFy5N5711KZHzKh9U4GQKTOvjv1yg7_8LxKZN0ALrWEQAI7gKi9JxvbnDDg-Qz78XzV5T6rTe8TzJeFc2KRAETmG6uVqSrimcqckqw-MOSP82mQMQYweW5IQ2l0WwG-uvKlHns4"/>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-4 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+<div class="lg:col-span-8 space-y-6">
+<div class="bg-primary/5 p-6 rounded-xl border border-primary/10">
+<div class="flex flex-wrap items-start justify-between gap-6">
+<div class="space-y-4 flex-1 min-w-[300px]">
+<div>
+<div class="flex items-center gap-3 mb-1">
+<img alt="Apple Logo" class="w-6 h-6 dark:invert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTGRLCC4dkgH_R4MTR-RSZDvyPBhiv8ZeIgTnHNgM1W1iFdwKYQn4Z0utnisZn2L-hLq1xfmOP-Rd0Jck9JC4g8MhiiL7TJ7XYqc6HoxUW7dEYjOk3cdQupUhKoRMpQm4swWMojofpyWUGx5i6x_XBLejkC8bfNHoZkRgSl15KZBnW9Ke5SQMd6WDwXMxE4yvC9uXTi-DOx3dqfNRW5DQ28PJjDlVOoVE6mjXByF6kvinZcn0yi9qtpVtUODZ0Mf4R95o8TEmH2Ig"/>
+<span class="text-slate-500 font-medium">Apple Inc. | NASDAQ</span>
+</div>
+<div class="flex items-baseline gap-4">
+<h1 class="text-5xl font-black tracking-tighter">$185.92</h1>
+<div class="flex items-center text-emerald-500 font-bold text-xl">
+<span class="material-symbols-outlined">arrow_drop_up</span>
+<span>+1.2% (+$2.21)</span>
+</div>
+</div>
+<p class="text-xs text-slate-400 mt-1 uppercase tracking-widest font-semibold">Market Open • June 14, 10:45 AM EDT</p>
+</div>
+<div class="group relative bg-primary/10 border border-primary/20 rounded-xl p-3 transition-all hover:bg-primary/15 cursor-pointer max-w-xl">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-1.5 px-3 py-1 bg-primary text-white text-[10px] font-black rounded-full tracking-wider">
+<span class="material-symbols-outlined text-xs">bolt</span> AI BUY
+</div>
+<span class="text-xs font-bold text-primary/80">92% Confidence • Short-term</span>
+</div>
+<span class="material-symbols-outlined text-primary/40 group-hover:rotate-180 transition-transform">expand_more</span>
+</div>
+<div class="collapse-content">
+<div class="pt-3 mt-3 border-t border-primary/10">
+<div class="flex items-start gap-3">
+<div class="p-1.5 bg-primary/20 rounded text-primary">
+<span class="material-symbols-outlined text-base">psychology</span>
+</div>
+<div class="space-y-2">
+<p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Neural Reasoning</p>
+<p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                                Market micro-structures indicate sell-order absorption at $184.50. Favorable technical convergence on 15m intervals projects a liquidity grab towards $189 within 48h.
+                            </p>
+<div class="flex gap-4 pt-1">
+<div class="text-[10px] font-bold text-emerald-500 uppercase">Support: $184.20</div>
+<div class="text-[10px] font-bold text-primary uppercase">Target: $189.40</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex gap-3 pt-2">
+<button class="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-lg font-bold shadow-lg shadow-primary/20 transition-all flex items-center gap-2">
+<span>Trade</span>
+</button>
+<button class="bg-primary/10 hover:bg-primary/20 text-primary px-4 py-3 rounded-lg font-bold transition-all">
+<span class="material-symbols-outlined align-middle">add_circle</span>
+</button>
+</div>
+</div>
+</div>
+<div class="bg-background-light dark:bg-background-dark/40 border border-primary/10 rounded-xl p-6 relative overflow-hidden">
+<div class="flex gap-2 mb-6 overflow-x-auto pb-2">
+<button class="px-4 py-1.5 rounded-full text-xs font-bold bg-primary text-white">1D</button>
+<button class="px-4 py-1.5 rounded-full text-xs font-bold text-slate-500 hover:bg-primary/10">5D</button>
+<button class="px-4 py-1.5 rounded-full text-xs font-bold text-slate-500 hover:bg-primary/10">1M</button>
+<button class="px-4 py-1.5 rounded-full text-xs font-bold text-slate-500 hover:bg-primary/10">6M</button>
+<button class="px-4 py-1.5 rounded-full text-xs font-bold text-slate-500 hover:bg-primary/10">YTD</button>
+<button class="px-4 py-1.5 rounded-full text-xs font-bold text-slate-500 hover:bg-primary/10">1Y</button>
+<button class="px-4 py-1.5 rounded-full text-xs font-bold text-slate-500 hover:bg-primary/10">ALL</button>
+</div>
+<div class="h-[300px] w-full relative">
+<svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 1000 300">
+<defs>
+<linearGradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#8c2bee" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#8c2bee" stop-opacity="0"></stop>
+</linearGradient>
+</defs>
+<path d="M0,250 Q100,220 200,260 T400,180 T600,220 T800,100 L800,300 L0,300 Z" fill="url(#chartGradient)"></path>
+<path d="M0,250 Q100,220 200,260 T400,180 T600,220 T800,100" fill="none" stroke="#8c2bee" stroke-linecap="round" stroke-width="4"></path>
+<path class="dashed-path" d="M800,100 Q850,70 900,120 T1000,40" fill="none" opacity="0.4" stroke="#94a3b8" stroke-linecap="round" stroke-width="3"></path>
+<circle cx="800" cy="100" fill="#8c2bee" r="5"></circle>
+<circle cx="800" cy="100" fill="#8c2bee" fill-opacity="0.2" r="12"></circle>
+<g opacity="0.6">
+<circle cx="1000" cy="40" fill="#94a3b8" r="4"></circle>
+<text class="uppercase tracking-[0.2em]" fill="#94a3b8" font-size="10" font-weight="900" text-anchor="end" x="990" y="30">AI PROJECTED TARGET: $189.40</text>
+</g>
+</svg>
+<div class="absolute bottom-0 w-full flex justify-between text-[10px] text-slate-500 font-bold uppercase tracking-wider py-4 border-t border-primary/10">
+<span>9:30 AM</span>
+<span>11:30 AM</span>
+<span>1:30 PM</span>
+<span>3:30 PM</span>
+<span class="text-primary font-black">Tomorrow (Projected)</span>
+</div>
+</div>
+</div>
+<section class="space-y-4">
+<div class="flex items-center gap-2 px-2">
+<span class="material-symbols-outlined text-primary fill-1">temp_preferences_custom</span>
+<h3 class="text-lg font-bold">Deep Analysis Breakdown</h3>
+<span class="ml-auto text-xs font-bold bg-primary/20 text-primary px-2 py-0.5 rounded uppercase tracking-wider">Experimental</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="bg-white/5 dark:bg-primary/5 backdrop-blur-xl border border-primary/20 rounded-xl p-5 hover:border-primary/40 transition-all flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<span class="text-xs font-bold uppercase text-slate-500">Short-term</span>
+<div class="px-2 py-1 bg-emerald-500/10 text-emerald-500 rounded text-[10px] font-black uppercase">Bullish</div>
+</div>
+<div class="text-2xl font-black mb-2 text-emerald-500">84%</div>
+<p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">Strong institutional buying patterns detected in the pre-market session suggests momentum toward $188 resistance.</p>
+<div class="mt-auto pt-4 border-t border-primary/10 flex items-center gap-2">
+<span class="material-symbols-outlined text-xs text-primary">target</span>
+<span class="text-xs font-bold">Target: $187.50</span>
+</div>
+</div>
+<div class="bg-white/5 dark:bg-primary/5 backdrop-blur-xl border border-primary/20 rounded-xl p-5 hover:border-primary/40 transition-all flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<span class="text-xs font-bold uppercase text-slate-500">Medium-term</span>
+<div class="px-2 py-1 bg-amber-500/10 text-amber-500 rounded text-[10px] font-black uppercase">Neutral</div>
+</div>
+<div class="text-2xl font-black mb-2 text-amber-500">52%</div>
+<p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">Upcoming quarterly earnings and supply chain constraints in Southeast Asia maintain a balanced risk-to-reward ratio.</p>
+<div class="mt-auto pt-4 border-t border-primary/10 flex items-center gap-2">
+<span class="material-symbols-outlined text-xs text-primary">analytics</span>
+<span class="text-xs font-bold">Consolidation range</span>
+</div>
+</div>
+<div class="bg-white/5 dark:bg-primary/5 backdrop-blur-xl border border-primary/20 rounded-xl p-5 hover:border-primary/40 transition-all flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<span class="text-xs font-bold uppercase text-slate-500">Long-term</span>
+<div class="px-2 py-1 bg-emerald-500/10 text-emerald-500 rounded text-[10px] font-black uppercase">Strong Bullish</div>
+</div>
+<div class="text-2xl font-black mb-2 text-emerald-500">91%</div>
+<p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">AI integration into the iOS ecosystem and services growth trajectory provides significant valuation upside for the fiscal year.</p>
+<div class="mt-auto pt-4 border-t border-primary/10 flex items-center gap-2">
+<span class="material-symbols-outlined text-xs text-primary">trending_up</span>
+<span class="text-xs font-bold">Est. Growth: +18%</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<aside class="lg:col-span-4 space-y-6">
+<div class="bg-white/5 dark:bg-primary/5 backdrop-blur-xl border border-primary/20 rounded-xl p-6 overflow-hidden relative">
+<div class="absolute -right-8 -top-8 w-24 h-24 bg-primary/10 blur-3xl rounded-full"></div>
+<h3 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Insider Sentiment</h3>
+<div class="flex items-center justify-between mb-6">
+<div>
+<div class="text-3xl font-black">0.12 <span class="text-sm font-bold text-primary">MSPR</span></div>
+<p class="text-xs text-slate-500">Mean Sentiment Per Ratio</p>
+</div>
+<div class="text-emerald-500 flex flex-col items-end">
+<span class="material-symbols-outlined text-3xl">groups_3</span>
+<span class="text-[10px] font-bold uppercase">Positive</span>
+</div>
+</div>
+<div class="w-full bg-slate-200 dark:bg-primary/20 h-2 rounded-full overflow-hidden flex">
+<div class="bg-emerald-500 h-full w-[65%]"></div>
+<div class="bg-slate-400 h-full w-[25%]"></div>
+<div class="bg-rose-500 h-full w-[10%]"></div>
+</div>
+<div class="flex justify-between mt-2 text-[10px] font-bold text-slate-500 uppercase">
+<span>Buy</span>
+<span>Hold</span>
+<span>Sell</span>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between px-2">
+<h3 class="text-sm font-bold text-slate-400 uppercase tracking-widest">Market News</h3>
+<a class="text-xs font-bold text-primary hover:underline" href="#">View All</a>
+</div>
+<div class="space-y-3">
+<div class="group bg-background-light dark:bg-primary/5 border border-primary/10 hover:border-primary/30 rounded-xl p-4 transition-all cursor-pointer">
+<div class="flex gap-4">
+<div class="w-16 h-16 rounded-lg bg-primary/10 overflow-hidden flex-shrink-0">
+<img alt="Apple HQ" class="w-full h-full object-cover group-hover:scale-110 transition-transform" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAD1yTZvqmFBSW4s0_f36zAicNT7jzmOVVc85dKAGrZoQ_z6FFPfTotydqQvVZdFoLj42UWaKgQBQR12oP7gT-ECCiG3BgI_ERUsUY8Ew5o1QilsmXHSHD_jw3lUn8l_95UexrVCWkNGLL-xuFkn5v35ftw7BboE8IPK44OxNTiCajVZ374Lc9yEaHHapcCTKx77S_HQKBt7Toymmpu6VUiwfb0G2EXnHcm_OQOFvKykunH_4Dy-Z0lbUdf_bB9weiOHpO9SyEsrkA"/>
+</div>
+<div class="flex-1">
+<p class="text-xs text-primary font-bold mb-1">Bloomberg • 2h ago</p>
+<h4 class="text-sm font-bold leading-tight line-clamp-2">Apple's WWDC Rumors: New AI features expected to revolutionize iPhone 16 experience.</h4>
+</div>
+</div>
+</div>
+<div class="group bg-background-light dark:bg-primary/5 border border-primary/10 hover:border-primary/30 rounded-xl p-4 transition-all cursor-pointer">
+<div class="flex gap-4">
+<div class="w-16 h-16 rounded-lg bg-primary/10 overflow-hidden flex-shrink-0">
+<img alt="Stock Market" class="w-full h-full object-cover group-hover:scale-110 transition-transform" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMrsoqWDp7wL8wkfFq5J3h_uXBhy_sIQOE7K1gZWJXmuUqWfG2cuCvW4W7wU0Tr0dDQgAZatfiPaMez2LCwePU6xFd4atJwAgftOdAvVe2Ki4WRI5IPNRFBmTHy4-skvypVbaEnLJaAKuBOGBRxvT7NREw_7BHM2mZDOYbvF3-wbMTB73kNRrjVMi7XWlfjbBxQuZZ6AWMaUoitheRn6Wi6DBw_AGx1_8fki5nWM43QyXEr1Ay3M0d9fkk2wh4U-xXU0c8L5_XUuk"/>
+</div>
+<div class="flex-1">
+<p class="text-xs text-primary font-bold mb-1">CNBC • 5h ago</p>
+<h4 class="text-sm font-bold leading-tight line-clamp-2">Tech Sector Rally: Why AAPL and MSFT are leading the charge today.</h4>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-primary border border-primary text-white rounded-xl p-6">
+<div class="flex justify-between items-center mb-4">
+<span class="material-symbols-outlined text-3xl">insights</span>
+<span class="text-xs bg-white/20 px-2 py-1 rounded font-bold uppercase">PRO</span>
+</div>
+<h4 class="font-bold mb-2">Portfolio Overview</h4>
+<p class="text-sm text-white/80 mb-4">You own 45 shares of AAPL. Your total return is +12.4%.</p>
+<button class="w-full py-2 bg-white text-primary rounded font-bold text-sm hover:bg-slate-100 transition-colors">Manage Holdings</button>
+</div>
+</aside>
+</main>
+<div class="fixed bottom-0 left-0 right-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-lg border-t border-primary/20 md:hidden p-4 flex gap-4 z-40">
+<button class="flex-1 bg-primary text-white py-3 rounded-lg font-bold shadow-lg shadow-primary/20">Buy AAPL</button>
+<button class="w-14 h-12 flex items-center justify-center bg-primary/10 text-primary rounded-lg">
+<span class="material-symbols-outlined">star</span>
+</button>
+</div>
+
+</body></html>

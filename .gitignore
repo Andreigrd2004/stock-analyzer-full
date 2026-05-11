@@ -1,0 +1,52 @@
+# Node / Next.js
+node_modules/
+.next/
+out/
+build/
+dist/
+.pnp
+.pnp.js
+
+# Java / Spring Boot
+target/
+*.jar
+*.war
+.mvn/
+mvnw
+mvnw.cmd
+logs/
+
+# Python / Models
+venv/
+.venv/
+.venv311/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.ipynb_checkpoints
+
+# Large Data Files / CSVs
+archive/
+*.csv
+*.tsv
+*.parquet
+*.json
+*.sqlite
+*.sqlite3
+
+# Docker / DB / OS
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.DS_Store
+db-data/
+postgres-data/
+
+# IDE / Editors
+.idea/
+.vscode/
+*.swp
+*.swo

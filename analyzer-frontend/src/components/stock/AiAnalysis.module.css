@@ -1,0 +1,434 @@
+/* ─── Container ─────────────────────────────────────────────────────────────── */
+
+.container {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  background-color: rgba(var(--primary-rgb), 0.04);
+}
+
+/* ─── Header ────────────────────────────────────────────────────────────────── */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.titleInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.icon {
+  color: var(--primary);
+  font-size: 1.4rem;
+}
+
+.title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: white;
+}
+
+.refreshBtn {
+  padding: 0.4rem;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+.refreshBtn:hover {
+  opacity: 1;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+}
+
+/* ─── Empty State ───────────────────────────────────────────────────────────── */
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem 1rem;
+  gap: 1.25rem;
+  background: rgba(var(--primary-rgb), 0.05);
+  border-radius: 0.75rem;
+  border: 1px dashed rgba(var(--primary-rgb), 0.3);
+}
+
+.emptyIconWrap {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: rgba(var(--primary-rgb), 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  font-size: 1.5rem;
+}
+
+.emptyText {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  max-width: 22rem;
+  line-height: 1.6;
+}
+
+/* ─── Loading skeletons ─────────────────────────────────────────────────────── */
+
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.875rem;
+}
+
+@media (max-width: 900px) {
+  .cardsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.skelCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 0.875rem;
+  padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  min-height: 8rem;
+}
+
+/* ─── Term Cards ────────────────────────────────────────────────────────────── */
+
+.termCard {
+  /* Reset button */
+  appearance: none;
+  text-align: left;
+  font-family: inherit;
+  cursor: pointer;
+
+  /* Layout */
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1rem;
+  border-radius: 0.875rem;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: linear-gradient(145deg, var(--card-grad-from), var(--card-grad-to));
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  min-height: 10rem;
+}
+
+.termCard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgba(255, 255, 255, 0);
+  transition: background 0.2s ease;
+}
+
+.termCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+  border-color: var(--card-accent);
+}
+
+.termCard:hover::before {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.termCard:active {
+  transform: translateY(-1px);
+}
+
+/* Card header row */
+.termCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.termCardIcon {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--card-accent);
+  font-size: 1rem;
+}
+
+.termCardLabel {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--card-accent);
+}
+
+.termCardPreview {
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--color-text-muted);
+  flex: 1;
+}
+
+/* Footer */
+.termCardFooter {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: auto;
+}
+
+.readMore {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--card-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.8;
+  transition: opacity 0.15s;
+}
+
+.termCard:hover .readMore {
+  opacity: 1;
+}
+
+.arrowIcon {
+  font-size: 0.85rem;
+  color: var(--card-accent);
+  opacity: 0.8;
+  transition: transform 0.2s ease, opacity 0.15s;
+}
+
+.termCard:hover .arrowIcon {
+  transform: translateX(3px);
+  opacity: 1;
+}
+
+/* ─── Error State ───────────────────────────────────────────────────────────── */
+
+.errorState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  background: rgba(var(--danger-rgb), 0.08);
+  border: 1px dashed rgba(var(--danger-rgb), 0.3);
+  border-radius: 0.75rem;
+  color: var(--color-text);
+  font-weight: 600;
+  text-align: center;
+  font-size: 0.875rem;
+}
+
+.errorSub {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+/* ─── Misc (plain string fallback) ─────────────────────────────────────────── */
+
+.textContent {
+  color: var(--color-text);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* ─── Overlay + Modal ───────────────────────────────────────────────────────── */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(10, 6, 20, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.modal {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(22, 14, 42, 0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  animation: slideUp 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+/* Glow blob */
+.modalGlow {
+  position: absolute;
+  top: -40%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: var(--modal-grad-from);
+  filter: blur(60px);
+  pointer-events: none;
+}
+
+/* Modal header */
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.25rem 1.25rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.modalTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.modalIconWrap {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--modal-accent);
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.modalSubtitle {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+}
+
+.modalTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: white;
+  line-height: 1.2;
+}
+
+.modalActions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.closeBtn {
+  appearance: none;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  font-size: 1rem;
+}
+.closeBtn:hover {
+  background: rgba(255, 255, 255, 0.13);
+  color: white;
+}
+
+/* Score bar */
+.scoreSection {
+  padding: 0.875rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.scoreLabelRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.4rem;
+}
+
+.scoreLabel {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+.scoreValue {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--modal-accent);
+}
+
+.scoreTrack {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.scoreFill {
+  height: 100%;
+  border-radius: 99px;
+  min-width: 6%;
+  transition: width 0.5s ease;
+}
+
+/* Modal body */
+.modalBody {
+  padding: 1.25rem;
+}
+
+.modalBodyLabel {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+}
+
+.modalBodyText {
+  font-size: 0.875rem;
+  line-height: 1.75;
+  color: var(--color-text);
+}

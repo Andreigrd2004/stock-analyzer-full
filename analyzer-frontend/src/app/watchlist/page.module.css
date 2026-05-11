@@ -1,0 +1,164 @@
+.main {
+  max-width: 64rem; /* max-w-5xl for a table layout */
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.title span {
+  color: var(--primary);
+}
+
+.tableCard {
+  padding: 0; /* remove padding to let table span edge-to-edge */
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.table th {
+  padding: 1rem 1.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  background-color: rgba(var(--primary-rgb), 0.1);
+  border-bottom: 1px solid rgba(var(--primary-rgb), 0.1);
+}
+
+.table td {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgba(var(--primary-rgb), 0.1);
+  vertical-align: middle;
+}
+
+.table tbody tr:hover {
+  background-color: rgba(var(--primary-rgb), 0.05);
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.alignRight {
+  text-align: right;
+}
+
+.alignCenter {
+  text-align: center;
+}
+
+.assetCol {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.assetAvatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  background-color: var(--background-dark);
+  border: 1px solid rgba(var(--primary-rgb), 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  color: white;
+  font-size: 1.25rem;
+}
+
+.assetInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.assetSymbol {
+  font-weight: 700;
+  font-size: 1rem;
+  color: white;
+}
+
+.assetSymbol:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.priceText {
+  font-weight: 600;
+  font-size: 1rem;
+  color: white;
+}
+
+.changeText {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.textSuccess { color: var(--success); }
+.textDanger { color: var(--danger); }
+.errorText { color: var(--color-text-muted); }
+
+.actionBtns {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.iconBtn {
+  padding: 0.5rem;
+}
+
+.iconBtnDanger {
+  padding: 0.5rem;
+  color: var(--danger);
+}
+
+.iconBtnDanger:hover {
+  background-color: rgba(var(--danger-rgb), 0.1);
+  color: var(--danger);
+}
+
+.emptyState {
+  padding: 4rem 2rem;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.loadingState {
+  padding: 1.5rem;
+}
+
+.mb {
+  margin-bottom: 1rem;
+}
+
+.inlineBlock {
+  display: inline-block;
+}

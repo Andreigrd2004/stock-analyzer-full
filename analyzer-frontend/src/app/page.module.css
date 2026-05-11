@@ -1,0 +1,72 @@
+.main {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  height: 100%;
+  overflow: hidden;
+}
+
+.hero {
+  position: relative;
+  min-height: 24rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 2rem;
+  border-radius: 1rem;
+  background-color: rgba(25, 16, 34, 0.4);
+  border: 1px solid rgba(var(--primary-rgb), 0.2);
+}
+
+.heroBgGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30rem;
+  height: 30rem;
+  background-color: rgba(var(--primary-rgb), 0.15);
+  filter: blur(100px);
+  border-radius: 50%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: 48rem;
+}
+
+.title {
+  font-size: 3rem;
+  line-height: 1.1;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  color: white;
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  color: var(--color-text-muted);
+  max-width: 36rem;
+}
+
+.searchForm {
+  display: flex;
+  width: 100%;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  max-width: 32rem;
+  align-items: center;
+}
+

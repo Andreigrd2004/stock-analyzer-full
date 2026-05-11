@@ -1,0 +1,41 @@
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+spring:
+  application:
+    name: stock-analyzer
+
+  servlet:
+    multipart:
+      max-file-size: 5GB
+      max-request-size: 5GB
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${POSTGRES_DB:stock_db}
+    username: ${POSTGRES_USER:admin}
+    password: ${POSTGRES_PASSWORD:stockAnalyzerPassword}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  ai:
+    google:
+      genai:
+        api-key: ${GOOGLE_GENAI_API_KEY}
+        chat:
+          options:
+            model: ${GEMINI_MODEL:gemini-2.5-flash}
+
+app:
+  financialmodelingprep-api-key: ${FINANCIAL_MODELING_PREP_API_KEY}
+  finnhub-api-key: ${FINNHUB_API_KEY}
+  jwt-secret: ${JWT_SECRET}
+  jwt-expiration-milliseconds: ${JWT_EXPIRATION_MS:180000000}

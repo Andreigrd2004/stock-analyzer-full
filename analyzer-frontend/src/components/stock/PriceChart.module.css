@@ -1,0 +1,129 @@
+/* ─── Container ───────────────────────────────────────────── */
+.container {
+  padding: 1.25rem 1.5rem 1rem;
+  width: 100%;
+}
+
+/* ─── Header ──────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.icon {
+  font-size: 1.1rem;
+  color: var(--primary);
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.subtitle {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  margin-top: 0.15rem;
+}
+
+.predictionBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid rgba(var(--warning-rgb), 0.4);
+  background: rgba(var(--warning-rgb), 0.08);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--warning);
+  animation: fadeIn 0.4s ease;
+}
+
+.predictionDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--warning);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1;   transform: scale(1);   }
+  50%       { opacity: 0.5; transform: scale(1.4); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Chart wrap ──────────────────────────────────────────── */
+.chartWrap {
+  margin-top: 1rem;
+  width: 100%;
+}
+
+/* ─── Custom tooltip ──────────────────────────────────────── */
+.tooltip {
+  background: rgba(20, 12, 30, 0.95);
+  border: 1px solid rgba(var(--primary-rgb), 0.3);
+  border-radius: 0.6rem;
+  padding: 0.55rem 0.85rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+
+.tooltipDate {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  margin-bottom: 0.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tooltipPrice {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* ─── States ──────────────────────────────────────────────── */
+.loadingWrap,
+.errorWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 220px;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.spinner {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid rgba(var(--primary-rgb), 0.2);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.errorIcon {
+  font-size: 2rem;
+  color: var(--danger);
+}

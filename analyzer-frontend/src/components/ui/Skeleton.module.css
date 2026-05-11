@@ -1,0 +1,22 @@
+.skeleton {
+  background: linear-gradient(-45deg, rgba(var(--primary-rgb), 0.1) 25%, rgba(var(--primary-rgb), 0.2) 50%, rgba(var(--primary-rgb), 0.1) 75%);
+  background-size: 400% 400%;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.rounded-sm { border-radius: 0.125rem; }
+.rounded-md { border-radius: 0.375rem; }
+.rounded-lg { border-radius: 0.5rem; }
+.rounded-full { border-radius: 9999px; }

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#8c2bee",
+                        "background-light": "#f7f6f8",
+                        "background-dark": "#191022",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(38, 25, 51, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(140, 43, 238, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .glow-shadow {
+            box-shadow: 0 0 20px rgba(140, 43, 238, 0.4);
+        }
+        .nebulous-bg {
+            background: radial-gradient(circle at 20% 30%, rgba(140, 43, 238, 0.15) 0%, transparent 40%),
+                        radial-gradient(circle at 80% 70%, rgba(140, 43, 238, 0.1) 0%, transparent 40%),
+                        #191022;
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark nebulous-bg min-h-screen flex flex-col">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<header class="flex items-center justify-between whitespace-nowrap px-10 py-6 w-full absolute top-0 z-10">
+<div class="flex items-center gap-2 text-slate-100">
+<div class="size-8 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1">insights</span>
+</div>
+<h2 class="text-slate-100 text-xl font-bold leading-tight tracking-tight">Stock Analyzer</h2>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-slate-400 hover:text-white transition-colors text-sm font-medium">Help</button>
+<button class="text-slate-400 hover:text-white transition-colors text-sm font-medium">Privacy</button>
+</div>
+</header>
+<main class="flex-1 flex items-center justify-center px-4 py-12">
+<div class="glass-card w-full max-w-md p-8 rounded-xl relative overflow-hidden">
+<div class="absolute -top-24 -right-24 w-48 h-48 bg-primary/20 rounded-full blur-3xl"></div>
+<div class="absolute -bottom-24 -left-24 w-48 h-48 bg-primary/10 rounded-full blur-3xl"></div>
+<div class="relative z-10">
+<div class="flex flex-col items-center mb-8">
+<div class="size-16 bg-primary/20 rounded-xl flex items-center justify-center mb-4 border border-primary/30">
+<span class="material-symbols-outlined text-4xl text-primary">trending_up</span>
+</div>
+<h1 class="text-slate-100 text-3xl font-bold tracking-tight text-center">Welcome Back</h1>
+<p class="text-slate-400 text-sm mt-2 text-center">Enter your credentials to access your dashboard</p>
+</div>
+<form action="#" class="space-y-5" method="POST">
+<div class="space-y-2">
+<label class="text-slate-300 text-sm font-medium px-1">Email Address</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xl">mail</span>
+<input class="w-full bg-background-dark/50 border border-primary/20 rounded-lg py-3 pl-11 pr-4 text-slate-100 placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" placeholder="name@company.com" type="email"/>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-center px-1">
+<label class="text-slate-300 text-sm font-medium">Password</label>
+<a class="text-primary text-xs hover:underline" href="#">Forgot password?</a>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xl">lock</span>
+<input class="w-full bg-background-dark/50 border border-primary/20 rounded-lg py-3 pl-11 pr-4 text-slate-100 placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" placeholder="••••••••" type="password"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300" type="button">
+<span class="material-symbols-outlined text-xl">visibility</span>
+</button>
+</div>
+</div>
+<div class="flex items-center gap-2 px-1">
+<input class="rounded border-primary/30 bg-background-dark text-primary focus:ring-primary/40 size-4" id="remember" type="checkbox"/>
+<label class="text-slate-400 text-xs" for="remember">Keep me logged in for 30 days</label>
+</div>
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3 rounded-lg glow-shadow transition-all transform active:scale-[0.98] mt-4 flex items-center justify-center gap-2" type="submit">
+<span>Sign In</span>
+<span class="material-symbols-outlined text-lg">arrow_forward</span>
+</button>
+</form>
+<div class="mt-8 flex items-center gap-4">
+<div class="h-px flex-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent"></div>
+<span class="text-slate-500 text-xs uppercase tracking-widest font-medium">Or continue with</span>
+<div class="h-px flex-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent"></div>
+</div>
+<div class="mt-6 grid grid-cols-2 gap-4">
+<button class="flex items-center justify-center gap-2 bg-background-dark/40 border border-primary/10 hover:border-primary/40 rounded-lg py-2.5 transition-all">
+<img alt="Google" class="size-4 grayscale brightness-200" data-alt="Google logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQA4mSe6IvmxBHA3pzNhoa4C3Fq2jYyHKNZTv1JTNONnaScRsm8qTtU8rPbH5dXnqz-kP671itHZ_48XaOck62mtcW5NjVQcoRAbAcqJgrJASuForm8id5t8ZlqX-Qe2p7SL6QN7ISuGcE6q46RYLumzQV-ZfE6BplFw8GikpatNl39wbGe08yb9FmrhkPJ68-GC0inx1Jcb5UwDLkoOAu6ZEdeirQxmBf_gtgIgYfp3J-nZ9reBGbfq1BkbI7GIoOB_HYX7mVda0"/>
+<span class="text-slate-300 text-sm">Google</span>
+</button>
+<button class="flex items-center justify-center gap-2 bg-background-dark/40 border border-primary/10 hover:border-primary/40 rounded-lg py-2.5 transition-all">
+<span class="material-symbols-outlined text-lg text-slate-300">terminal</span>
+<span class="text-slate-300 text-sm">GitHub</span>
+</button>
+</div>
+<p class="text-center text-slate-400 text-sm mt-8">
+                        Don't have an account? 
+                        <a class="text-primary font-semibold hover:underline" href="#">Create an account</a>
+</p>
+</div>
+</div>
+</main>
+<footer class="py-8 px-4 text-center">
+<p class="text-slate-600 text-xs tracking-wide uppercase">
+                © 2024 Stock Analyzer AI. All institutional rights reserved.
+            </p>
+</footer>
+</div>
+</body></html>

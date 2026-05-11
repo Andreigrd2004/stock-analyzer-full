@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Prediction</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 24px; }
+        form { margin-bottom: 16px; }
+        input, button { padding: 8px; }
+        .error { color: #b30000; margin: 12px 0; }
+        .card { margin: 20px 0; }
+        img { max-width: 100%; border: 1px solid #ddd; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 6px; }
+    </style>
+</head>
+<body>
+    <h1>Stock Trend Prediction</h1>
+
+    <form method="post">
+        <label for="stock">Ticker Symbol:</label>
+        <input id="stock" name="stock" type="text" placeholder="POWERGRID.NS" value="{{ stock or '' }}">
+        <button type="submit">Analyze</button>
+    </form>
+
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+
+    {% if plot_path_ema_20_50 %}
+        <div class="card">
+            <h2>Closing Price with EMA 20 & 50</h2>
+            <img src="/{{ plot_path_ema_20_50 }}" alt="EMA 20 and 50 chart">
+        </div>
+
+        <div class="card">
+            <h2>Closing Price with EMA 100 & 200</h2>
+            <img src="/{{ plot_path_ema_100_200 }}" alt="EMA 100 and 200 chart">
+        </div>
+
+        <div class="card">
+            <h2>Prediction vs Original</h2>
+            <img src="/{{ plot_path_prediction }}" alt="Prediction chart">
+        </div>
+
+        <div class="card">
+            <h2>Dataset Statistics</h2>
+            {{ data_desc | safe }}
+        </div>
+
+        <div class="card">
+            <a href="/download/{{ dataset_link.split('/')[-1] }}">Download Generated Dataset CSV</a>
+        </div>
+    {% endif %}
+</body>
+</html>
+
