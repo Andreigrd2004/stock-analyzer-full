@@ -5,7 +5,7 @@
 # ─────────────────────────────────────────────────────────────────────────────
 
 # ── Stage 1: Build the fat JAR ────────────────────────────────────────────────
-FROM maven:3.9-eclipse-temurin-21 AS builder
+FROM docker.io/library/maven:3.9-eclipse-temurin-21 AS builder
 WORKDIR /app
 
 # Cache Maven dependencies separately from source
@@ -17,7 +17,7 @@ COPY src ./src
 RUN mvn package -DskipTests -q
 
 # ── Stage 2: Slim runtime image ───────────────────────────────────────────────
-FROM eclipse-temurin:21-jre-alpine
+FROM docker.io/library/eclipse-temurin:21-jre-alpine
 WORKDIR /app
 
 COPY --from=builder /app/target/analyzer-*.jar app.jar

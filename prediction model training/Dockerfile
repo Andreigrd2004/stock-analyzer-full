@@ -5,7 +5,7 @@
 
 # TensorFlow 2.16.1 requires Python 3.11 — use the official TF image to avoid
 # manual CUDA / lib setup. The CPU-only variant keeps the image smaller.
-FROM python:3.11-slim
+FROM docker.io/library/python:3.11-slim
 
 WORKDIR /app
 

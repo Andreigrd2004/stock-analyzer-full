@@ -1,5 +1,5 @@
 # ─── Stage 1: Install ALL dependencies (including devDeps needed for build) ───
-FROM node:20-alpine AS deps
+FROM docker.io/library/node:20-alpine AS deps
 WORKDIR /app
 
 COPY package.json package-lock.json ./
@@ -8,7 +8,7 @@ COPY package.json package-lock.json ./
 RUN npm ci
 
 # ─── Stage 2: Build the Next.js app ──────────────────────────────────────────
-FROM node:20-alpine AS builder
+FROM docker.io/library/node:20-alpine AS builder
 WORKDIR /app
 
 COPY --from=deps /app/node_modules ./node_modules
@@ -24,7 +24,7 @@ ENV NEXT_PUBLIC_FINNHUB_API_KEY=$NEXT_PUBLIC_FINNHUB_API_KEY
 RUN npm run build
 
 # ─── Stage 3: Slim production runner ─────────────────────────────────────────
-FROM node:20-alpine AS runner
+FROM docker.io/library/node:20-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
