@@ -104,7 +104,7 @@ services:
       dockerfile: Dockerfile
       args:
         # NEXT_PUBLIC_* vars are baked into the JS bundle at build time
-        NEXT_PUBLIC_API_URL:         ${NEXT_PUBLIC_API_URL:-http://localhost/api}
+        NEXT_PUBLIC_API_URL:         ${NEXT_PUBLIC_API_URL:-/api}
         NEXT_PUBLIC_FINNHUB_API_KEY: ${NEXT_PUBLIC_FINNHUB_API_KEY}
     container_name: stockpulse_frontend
     restart: unless-stopped
