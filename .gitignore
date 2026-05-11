@@ -31,7 +31,6 @@ archive/
 *.csv
 *.tsv
 *.parquet
-*.json
 *.sqlite
 *.sqlite3
 
