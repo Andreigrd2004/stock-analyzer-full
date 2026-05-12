@@ -134,7 +134,7 @@ export default function WatchlistPage() {
 
   return (
     <>
-      <Header />
+      <Header activePage="watchlist" />
       <main className={styles.main}>
         <div className={styles.headerRow}>
           <h1 className={styles.title}>
@@ -182,7 +182,7 @@ export default function WatchlistPage() {
 
                     return (
                       <tr key={item.interestId}>
-                        <td>
+                        <td data-label="Asset">
                           <div className={styles.assetCol}>
                             <div className={styles.assetAvatar}>
                               {item.symbol ? item.symbol.charAt(0) : '?'}
@@ -194,7 +194,7 @@ export default function WatchlistPage() {
                             </div>
                           </div>
                         </td>
-                        <td className={styles.alignRight}>
+                        <td className={styles.alignRight} data-label="Price">
                           {item.loading ? (
                             <Skeleton width={60} height={20} className={styles.inlineBlock} />
                           ) : quote ? (
@@ -203,7 +203,7 @@ export default function WatchlistPage() {
                             <span className={styles.errorText}>-</span>
                           )}
                         </td>
-                        <td className={styles.alignRight}>
+                        <td className={styles.alignRight} data-label="24h Change">
                           {item.loading ? (
                             <Skeleton width={60} height={20} className={styles.inlineBlock} />
                           ) : quote ? (
@@ -214,7 +214,7 @@ export default function WatchlistPage() {
                             <span className={styles.errorText}>-</span>
                           )}
                         </td>
-                        <td className={styles.alignCenter}>
+                        <td className={styles.alignCenter} data-label="Actions">
                           <div className={styles.actionBtns}>
                             <Link href={`/stock/${item.symbol}`}>
                               <Button variant="ghost" className={styles.iconBtn}>

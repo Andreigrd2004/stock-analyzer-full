@@ -13,6 +13,25 @@
   width: 100%;
 }
 
+@media (max-width: 640px) {
+  .inputRow {
+    flex-wrap: wrap;
+  }
+  
+  .inputRow > :first-child {
+    flex: 1 1 100%;
+  }
+
+  .inputRow > :nth-child(2) {
+    flex: 1 1 100%;
+  }
+
+  .spinnerWrap {
+    right: 1.5rem;
+    top: 2rem; /* adjust based on input height */
+  }
+}
+
 /* ─── Spinner inside the input ────────────────────────────── */
 .spinnerWrap {
   position: absolute;

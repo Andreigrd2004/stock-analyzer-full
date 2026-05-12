@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { GlassCard } from '../ui/GlassCard';
 import { Badge } from '../ui/Badge';
 import { stockApi } from '../../lib/stockApi';
@@ -88,6 +89,8 @@ export function TrendingMarkets() {
     };
   }, []);
 
+  const router = useRouter();
+
   return (
     <section className={styles.trendingSection}>
       <h2 className={styles.sectionTitle}>
@@ -107,7 +110,7 @@ export function TrendingMarkets() {
             const isPositive = percentChange >= 0;
 
             return (
-              <GlassCard key={index} className={styles.card}>
+              <GlassCard key={index} style={{cursor: 'pointer'}} className={styles.card} onClick={() => router.push(`/stock/${market.symbol}`)}>
                 <div className={styles.cardHeader}>
                   <div>
                     <h3 className={styles.cardTitle}>{market.name}</h3>

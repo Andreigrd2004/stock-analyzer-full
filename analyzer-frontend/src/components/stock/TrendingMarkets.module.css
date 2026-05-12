@@ -26,6 +26,39 @@
 
 .card {
   padding: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-4px) scale(1.01);
+  border-color: rgba(var(--primary-rgb), 0.4) !important;
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+  background: rgba(45, 30, 60, 0.7);
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transform: skewX(-25deg);
+  transition: none;
+  pointer-events: none;
+}
+
+.card:hover::after {
+  left: 150%;
+  transition: all 0.6s ease-in-out;
 }
 
 .cardHeader {

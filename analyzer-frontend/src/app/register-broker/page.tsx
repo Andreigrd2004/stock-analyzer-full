@@ -108,7 +108,7 @@ export default function RegisterBrokerPage() {
             <div>
               <h1 className={styles.title}>Register a Broker</h1>
               <p className={styles.subtitle}>
-                Set up the affiliate campaign and start reaching investors on StockGen.ai.
+                Set up the affiliate campaign and start reaching investors on AiStockAnalyzer.me.
               </p>
             </div>
           </div>

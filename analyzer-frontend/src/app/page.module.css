@@ -70,3 +70,33 @@
   align-items: center;
 }
 
+@media (max-width: 768px) {
+  .main {
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+
+  .hero {
+    padding: 3rem 1.5rem;
+    min-height: auto;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .heroBgGlow {
+    width: 20rem;
+    height: 20rem;
+  }
+
+  .searchForm {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+

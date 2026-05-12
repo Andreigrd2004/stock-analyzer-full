@@ -131,7 +131,6 @@ export const InsiderSentiment: React.FC<{ symbol: string }> = ({ symbol }) => {
                 <span className={styles.metricLabel}>Latest MSPR</span>
                 <div className={styles.metricValue}>
                   {latest}
-                  {latestPeriod && <span className={styles.periodLabel}>({latestPeriod})</span>}
                 </div>
               </div>
               <div className={styles.metricBox}>

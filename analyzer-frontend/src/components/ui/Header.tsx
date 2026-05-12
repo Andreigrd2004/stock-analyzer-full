@@ -14,6 +14,7 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ activePage = 'dashboard' }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [username, setUsername] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -64,13 +65,22 @@ export const Header: React.FC<HeaderProps> = ({ activePage = 'dashboard' }) => {
     <header className={styles.header}>
       <div className={styles.container}>
         <div className={styles.logoSection}>
+          <button 
+            className={styles.mobileMenuToggle} 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            <span className="material-symbols-outlined">
+              {isMobileMenuOpen ? 'close' : 'menu'}
+            </span>
+          </button>
           <div className={styles.logoIcon}>
             <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>
               insights
             </span>
           </div>
           <Link href="/" className={styles.brandName}>
-            StockGen.ai
+            AiStockAnalyzer.me
           </Link>
           <nav className={styles.nav}>
             <Link href="/" className={activePage === 'dashboard' ? styles.activeLink : styles.navLink}>Dashboard</Link>
@@ -111,6 +121,50 @@ export const Header: React.FC<HeaderProps> = ({ activePage = 'dashboard' }) => {
           </div>
         </div>
       </div>
+
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div className={styles.mobileMenu}>
+          <nav className={styles.mobileNav}>
+            <Link 
+              href="/" 
+              className={activePage === 'dashboard' ? styles.activeMobileLink : styles.mobileNavLink}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <span className="material-symbols-outlined">dashboard</span>
+              Dashboard
+            </Link>
+            <Link 
+              href="/watchlist" 
+              className={activePage === 'watchlist' ? styles.activeMobileLink : styles.mobileNavLink}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <span className="material-symbols-outlined">star</span>
+              Watchlist
+            </Link>
+            {role === 'BROKER' && (
+              <Link 
+                href="/broker-admin" 
+                className={activePage === 'broker-admin' ? styles.activeMobileLink : styles.mobileNavLink}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <span className="material-symbols-outlined">admin_panel_settings</span>
+                Broker Admin
+              </Link>
+            )}
+            {role === 'ADMIN' && (
+              <Link 
+                href="/register-broker" 
+                className={activePage === 'register-broker' ? styles.activeMobileLink : styles.mobileNavLink}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <span className="material-symbols-outlined">person_add</span>
+                Register Broker
+              </Link>
+            )}
+          </nav>
+        </div>
+      )}
     </header>
   );
 };
