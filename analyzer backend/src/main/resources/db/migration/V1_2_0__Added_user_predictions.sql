@@ -1,0 +1,1 @@
+ALTER TABLE users ADD COLUMN prediction_id BIGINT, ADD CONSTRAINT fk_prediction FOREIGN KEY (prediction_id) REFERENCES predictions (id);

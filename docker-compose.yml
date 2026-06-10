@@ -93,7 +93,7 @@ services:
     # The .h5 model file is large — mount it from the host so it
     # does not need to be re-copied on every rebuild.
     volumes:
-      - "./prediction model training/stock_dl_model_2.h5:/app/stock_dl_model_2.h5:ro"
+      - "./prediction model training/stock_dl_model_2 (1).h5:/app/stock_dl_model_2 (1).h5:ro"
     networks:
       - internal
 

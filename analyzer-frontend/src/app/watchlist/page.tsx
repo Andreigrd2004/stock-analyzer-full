@@ -9,25 +9,60 @@ import { Skeleton } from '@/components/ui/Skeleton';
 import { Button } from '@/components/ui/Button';
 import { userApi } from '@/lib/userApi';
 import { stockApi } from '@/lib/stockApi';
-import type { StockQuote, UserStockInterest } from '@/types';
+import { AiAnalysis } from '@/components/stock/AiAnalysis';
+import type { StockQuote, PredictionDTO } from '@/types';
 import styles from './page.module.css';
 
-// Local type for combined data
+// ─── Types ────────────────────────────────────────────────────────────────────
+
 interface WatchlistItem {
   interestId: string;
   symbol: string;
   quote?: StockQuote;
-  loading: boolean;
-  error?: string;
+  quoteLoading: boolean;
+  quoteError?: string;
+  prediction?: PredictionDTO;
+  predictionsLoading: boolean;
 }
 
-export default function WatchlistPage() {
-  const [items, setItems] = useState<WatchlistItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+/**
+ * Modal state:
+ *  - symbol: the stock being viewed/generated
+ *  - summary: JSON string of existing prediction (show 3 cards directly)
+ *             OR null → no prediction yet, show the generate flow
+ */
+interface ModalState {
+  symbol: string;
+  summary: string | null;
+}
 
-  // Mock user ID for demonstration
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+function getActionVariant(action: string): 'success' | 'danger' | 'warning' | 'primary' {
+  const a = action.toLowerCase();
+  if (a.includes('buy'))  return 'success';
+  if (a.includes('sell')) return 'danger';
+  if (a.includes('hold')) return 'warning';
+  return 'primary';
+}
+
+// ─── Component ────────────────────────────────────────────────────────────────
+
+export default function WatchlistPage() {
+  const [items, setItems]     = useState<WatchlistItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError]     = useState<string | null>(null);
+  const [modal, setModal]     = useState<ModalState | null>(null);
+
   const userId = '1';
+
+  // Close modal on Escape
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') handleCloseModal(); };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [modal]);
 
   useEffect(() => {
     let active = true;
@@ -35,86 +70,91 @@ export default function WatchlistPage() {
     const fetchWatchlist = async () => {
       try {
         setLoading(true);
-        let interests: { symbol: string }[] = [];
 
+        // 1. Fetch user watchlist symbols
+        let symbols: string[] = [];
         try {
-          const remoteInterests = await userApi.getWatchlist();
-          if (remoteInterests) {
-            const dataList = Array.isArray(remoteInterests) ? remoteInterests : (remoteInterests.interests || []);
-            if (dataList.length > 0) {
-              interests = (dataList.map((item: any): { symbol: string } => {
-                let sym = '';
-                if (typeof item === 'string') {
-                  sym = item;
-                } else if (item && typeof item === 'object') {
-                  sym = item.stockName || item.symbol || '';
-                }
-                return { symbol: sym };
-              })).filter((i: { symbol: string }) => i.symbol !== '');
-            }
+          const remote = await userApi.getWatchlist();
+          if (remote) {
+            const list = Array.isArray(remote) ? remote : (remote.interests ?? []);
+            symbols = list
+              .map((item: any) => {
+                if (typeof item === 'string') return item;
+                return item?.stockName || item?.symbol || '';
+              })
+              .filter(Boolean);
           }
         } catch (e) {
-          console.warn('Backend userApi failed', e);
+          console.warn('Watchlist fetch failed', e);
         }
 
         if (!active) return;
 
-        const initialItems = interests.map(i => ({
-          interestId: i.symbol, // using symbol as ID since backend uses stockName
-          symbol: i.symbol,
-          loading: true,
+        // 2. Build initial items (all in loading state)
+        const initial: WatchlistItem[] = symbols.map(sym => ({
+          interestId: sym,
+          symbol: sym,
+          quoteLoading: true,
+          predictionsLoading: true,
         }));
-        
-        setItems(initialItems);
+        setItems(initial);
+        setLoading(false);
 
-        // Fetch quotes for each item
-        initialItems.forEach(async (item) => {
+        // 3. Fetch quotes in parallel
+        initial.forEach(async (item) => {
           try {
             const res = await stockApi.getPriceChange(item.symbol);
             if (!active) return;
 
-            let finalQuote: StockQuote | null = null;
-            let dataObj = res;
-            if (typeof dataObj === 'string') {
-              try {
-                dataObj = JSON.parse(dataObj);
-              } catch (e) {
-                console.error('Failed to parse watchlist quote', e);
-              }
-            }
-            if (Array.isArray(dataObj)) {
-              dataObj = dataObj[0];
-            }
-            if (dataObj && typeof dataObj === 'object') {
-              finalQuote = {
-                c: parseFloat(dataObj.c ?? dataObj.current ?? 0) || 0,
-                h: parseFloat(dataObj.h ?? dataObj.high ?? 0) || 0,
-                l: parseFloat(dataObj.l ?? dataObj.low ?? 0) || 0,
-                o: parseFloat(dataObj.o ?? dataObj.open ?? 0) || 0,
-                pc: parseFloat(dataObj.pc ?? dataObj.previousClose ?? 0) || 0,
-                t: dataObj.t ? (typeof dataObj.t === 'string' ? parseFloat(dataObj.t) : dataObj.t) : Date.now()
-              };
-            }
+            let data: any = res;
+            if (typeof data === 'string') { try { data = JSON.parse(data); } catch (_) {} }
+            if (Array.isArray(data)) data = data[0];
 
-            if (finalQuote && (finalQuote.c !== 0 || finalQuote.pc !== 0)) {
-              setItems(prev => prev.map(p => 
-                p.symbol === item.symbol ? { ...p, quote: finalQuote!, loading: false } : p
-              ));
-            } else {
-              throw new Error('No quote data');
-            }
-          } catch (err: any) {
+            const q: StockQuote | null = data && typeof data === 'object'
+              ? {
+                  c:  parseFloat(data.c  ?? data.current       ?? 0) || 0,
+                  h:  parseFloat(data.h  ?? data.high          ?? 0) || 0,
+                  l:  parseFloat(data.l  ?? data.low           ?? 0) || 0,
+                  o:  parseFloat(data.o  ?? data.open          ?? 0) || 0,
+                  pc: parseFloat(data.pc ?? data.previousClose ?? 0) || 0,
+                  t:  data.t ? (typeof data.t === 'string' ? parseFloat(data.t) : data.t) : Date.now(),
+                }
+              : null;
+
+            setItems(prev => prev.map(p =>
+              p.symbol === item.symbol
+                ? { ...p, quote: q ?? undefined, quoteLoading: false, quoteError: q ? undefined : 'No data' }
+                : p
+            ));
+          } catch {
             if (!active) return;
-            setItems(prev => prev.map(p => 
-              p.symbol === item.symbol ? { ...p, loading: false, error: 'Failed' } : p
+            setItems(prev => prev.map(p =>
+              p.symbol === item.symbol ? { ...p, quoteLoading: false, quoteError: 'Failed' } : p
             ));
           }
         });
 
+        // 4. Fetch all predictions in a single batch call
+        if (symbols.length > 0) {
+          try {
+            const predRes = await stockApi.getRelatedPredictions({ stockSymbols: symbols });
+            if (!active) return;
+
+            const predictions: PredictionDTO[] = predRes?.predictions ?? [];
+
+            setItems(prev => prev.map(p => {
+              const pred = predictions.find((pr: PredictionDTO) => pr.stockSymbol === p.symbol);
+              return { ...p, prediction: pred, predictionsLoading: false };
+            }));
+          } catch (e) {
+            console.warn('Predictions fetch failed', e);
+            setItems(prev => prev.map(p => ({ ...p, predictionsLoading: false })));
+          }
+        }
+
       } catch (err: any) {
-        if (active) setError(err.message || 'Failed to initialize watchlist');
-      } finally {
-        if (active) setLoading(false);
+        if (active) setError(err.message || 'Failed to load watchlist');
+        setLoading(false);
       }
     };
 
@@ -122,123 +162,281 @@ export default function WatchlistPage() {
     return () => { active = false; };
   }, [userId]);
 
-  const handleRemove = async (interestId: string, symbol: string) => {
-    // Optimistic update
+  const handleRemove = async (symbol: string) => {
     setItems(prev => prev.filter(i => i.symbol !== symbol));
-    try {
-      await userApi.removeFromWatchlist(symbol);
-    } catch (e) {
-      console.warn('Failed to remove from backend', e);
+    try { await userApi.removeFromWatchlist(symbol); }
+    catch (e) { console.warn('Remove failed', e); }
+  };
+
+  /**
+   * Called when the modal is closed. If it was in generate mode (summary was null),
+   * re-fetch the prediction for that stock so the card updates without a full reload.
+   */
+  const handleCloseModal = async () => {
+    const wasGenerating = modal && modal.summary === null;
+    const symbol = modal?.symbol;
+    setModal(null);
+
+    if (wasGenerating && symbol) {
+      try {
+        const predRes = await stockApi.getRelatedPredictions({ stockSymbols: [symbol] });
+        const predictions: PredictionDTO[] = predRes?.predictions ?? [];
+        const pred = predictions.find((pr: PredictionDTO) => pr.stockSymbol === symbol);
+        if (pred) {
+          setItems(prev => prev.map(p =>
+            p.symbol === symbol ? { ...p, prediction: pred } : p
+          ));
+        }
+      } catch (e) {
+        console.warn('Prediction refresh failed', e);
+      }
     }
   };
+
+  // ── Render ──────────────────────────────────────────────────────────────────
 
   return (
     <>
       <Header activePage="watchlist" />
       <main className={styles.main}>
+
+        {/* ── Page Title */}
         <div className={styles.headerRow}>
           <h1 className={styles.title}>
-            <span className="material-symbols-outlined starIcon">star</span>
+            <span className={`material-symbols-outlined ${styles.starIcon}`}>star</span>
             Followed Stocks
           </h1>
         </div>
 
-        <GlassCard className={styles.tableCard}>
-          {error ? (
+        {/* ── Error */}
+        {error && (
+          <GlassCard>
             <div className={styles.emptyState}>{error}</div>
-          ) : loading ? (
-            <div className={styles.loadingState}>
-              <Skeleton height={40} className={styles.mb} />
-              <Skeleton height={60} className={styles.mb} />
-              <Skeleton height={60} />
-            </div>
-          ) : items.length === 0 ? (
+          </GlassCard>
+        )}
+
+        {/* ── Initial skeleton grid */}
+        {!error && loading && (
+          <div className={styles.gridContainer}>
+            {[1, 2, 3].map(n => (
+              <GlassCard key={n}>
+                <div className={styles.cardInner}>
+                  <div className={styles.loadingState}>
+                    <Skeleton height={36} />
+                    <Skeleton height={72} />
+                    <Skeleton height={36} />
+                  </div>
+                </div>
+              </GlassCard>
+            ))}
+          </div>
+        )}
+
+        {/* ── Empty */}
+        {!error && !loading && items.length === 0 && (
+          <GlassCard>
             <div className={styles.emptyState}>
               Your watchlist is empty. Search for a stock to add it here.
             </div>
-          ) : (
-            <div className={styles.tableWrapper}>
-              <table className={styles.table}>
-                <thead>
-                  <tr>
-                    <th>Asset</th>
-                    <th className={styles.alignRight}>Price</th>
-                    <th className={styles.alignRight}>24h Change</th>
-                    <th className={styles.alignCenter}>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {items.map((item) => {
-                    const quote = item.quote;
-                    let changeValue = 0;
-                    let changePercent = 0;
-                    let isPositive = true;
+          </GlassCard>
+        )}
 
-                    if (quote) {
-                      changeValue = (quote?.c ?? 0) - (quote?.pc ?? 0);
-                      changePercent = quote?.pc ? (changeValue / quote.pc) * 100 : 0;
-                      isPositive = changeValue >= 0;
-                    }
+        {/* ── Stock Cards */}
+        {!error && !loading && items.length > 0 && (
+          <div className={styles.gridContainer}>
+            {items.map(item => {
+              const quote         = item.quote;
+              const hasPrediction = !!item.prediction;
 
-                    return (
-                      <tr key={item.interestId}>
-                        <td data-label="Asset">
-                          <div className={styles.assetCol}>
-                            <div className={styles.assetAvatar}>
-                              {item.symbol ? item.symbol.charAt(0) : '?'}
-                            </div>
-                            <div className={styles.assetInfo}>
-                              <Link href={`/stock/${item.symbol}`} className={styles.assetSymbol}>
-                                {item.symbol}
-                              </Link>
-                            </div>
-                          </div>
-                        </td>
-                        <td className={styles.alignRight} data-label="Price">
-                          {item.loading ? (
-                            <Skeleton width={60} height={20} className={styles.inlineBlock} />
-                          ) : quote ? (
-                            <span className={styles.priceText}>${(quote?.c ?? 0).toFixed(2)}</span>
+              const changeValue   = quote ? (quote.c - quote.pc) : 0;
+              const changePercent = quote?.pc ? (changeValue / quote.pc) * 100 : 0;
+              const isPositive    = changeValue >= 0;
+
+              return (
+                <GlassCard key={item.interestId}>
+
+                  <div className={styles.cardInner}>
+
+                    {/* ── Header row: avatar + symbol + action badge */}
+                    <div className={styles.cardHeader}>
+                      <div className={styles.assetCol}>
+                        <div className={styles.assetAvatar}>
+                          {item.symbol.charAt(0)}
+                        </div>
+                        <div className={styles.assetInfo}>
+                          <Link href={`/stock/${item.symbol}`} className={styles.assetSymbol}>
+                            {item.symbol}
+                          </Link>
+                          {item.predictionsLoading ? (
+                            <Skeleton width={60} height={18} />
+                          ) : hasPrediction ? (
+                            <Badge variant={getActionVariant(item.prediction!.action)} glow>
+                              {item.prediction!.action.toUpperCase()}
+                            </Badge>
                           ) : (
-                            <span className={styles.errorText}>-</span>
+                            <span className={styles.noPredictionNote}>No prediction yet</span>
                           )}
-                        </td>
-                        <td className={styles.alignRight} data-label="24h Change">
-                          {item.loading ? (
-                            <Skeleton width={60} height={20} className={styles.inlineBlock} />
-                          ) : quote ? (
-                            <span className={`${styles.changeText} ${isPositive ? styles.textSuccess : styles.textDanger}`}>
-                              {isPositive ? '+' : ''}{changePercent.toFixed(2)}%
-                            </span>
-                          ) : (
-                            <span className={styles.errorText}>-</span>
-                          )}
-                        </td>
-                        <td className={styles.alignCenter} data-label="Actions">
-                          <div className={styles.actionBtns}>
-                            <Link href={`/stock/${item.symbol}`}>
-                              <Button variant="ghost" className={styles.iconBtn}>
-                                <span className="material-symbols-outlined">analytics</span>
-                              </Button>
-                            </Link>
-                            <Button 
-                              variant="ghost" 
-                              className={styles.iconBtnDanger}
-                              onClick={() => handleRemove(item.interestId, item.symbol)}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* ── Price section */}
+                    <div className={styles.priceSection}>
+                      <div className={styles.priceCol}>
+                        <span className={styles.priceLabel}>Current Price</span>
+                        {item.quoteLoading ? (
+                          <Skeleton width={80} height={22} />
+                        ) : quote ? (
+                          <span className={styles.priceText}>${quote.c.toFixed(2)}</span>
+                        ) : (
+                          <span className={styles.errorText}>—</span>
+                        )}
+                      </div>
+
+                      <div className={styles.priceCol} style={{ alignItems: 'flex-end' }}>
+                        <span className={styles.priceLabel}>24H Change</span>
+                        {item.quoteLoading ? (
+                          <Skeleton width={60} height={22} />
+                        ) : quote ? (
+                          <span className={`${styles.changeText} ${isPositive ? styles.textSuccess : styles.textDanger}`}>
+                            {isPositive ? '+' : ''}{changePercent.toFixed(2)}%
+                          </span>
+                        ) : (
+                          <span className={styles.errorText}>—</span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* ── Prediction strip — always rendered to keep equal card height */}
+                    <div className={styles.predictionStrip}>
+                      {hasPrediction ? (
+                        <>
+                          <div className={styles.predictionTarget}>
+                            <span
+                              className="material-symbols-outlined"
+                              style={{ fontSize: '1.1rem', color: 'var(--primary)' }}
                             >
-                              <span className="material-symbols-outlined">delete</span>
-                            </Button>
+                              target
+                            </span>
+                            AI Target:&nbsp;
+                            <span className={styles.predictionTargetValue}>
+                              ${item.prediction!.predicted.toFixed(2)}
+                            </span>
                           </div>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </GlassCard>
+                          <Badge variant={getActionVariant(item.prediction!.action)}>
+                            {item.prediction!.action.toUpperCase()}
+                          </Badge>
+                        </>
+                      ) : item.predictionsLoading ? (
+                        <Skeleton width={160} height={18} />
+                      ) : (
+                        <span className={styles.noPredictionNote}>No AI prediction available</span>
+                      )}
+                    </div>
+
+                    {/* ── Actions row */}
+                    <div className={styles.cardActions}>
+                      {hasPrediction ? (
+                        /* View existing prediction */
+                        <Button
+                          variant="primary"
+                          onClick={() => setModal({ symbol: item.symbol, summary: item.prediction!.summary })}
+                        >
+                          <span className="material-symbols-outlined" style={{ fontSize: '1rem' }}>
+                            auto_awesome
+                          </span>
+                          More Details
+                        </Button>
+                      ) : !item.predictionsLoading ? (
+                        /* Generate a new prediction */
+                        <Button
+                          variant="primary"
+                          onClick={() => setModal({ symbol: item.symbol, summary: null })}
+                        >
+                          <span className="material-symbols-outlined" style={{ fontSize: '1rem' }}>
+                            psychology
+                          </span>
+                          Generate AI
+                        </Button>
+                      ) : (
+                        <div />
+                      )}
+
+                      {/* Right: analytics link + delete */}
+                      <div className={styles.actionBtnsRight}>
+                        <Link href={`/stock/${item.symbol}`}>
+                          <Button variant="ghost" className={styles.iconBtn} title="View Analytics">
+                            <span className="material-symbols-outlined">analytics</span>
+                          </Button>
+                        </Link>
+                        <Button
+                          variant="ghost"
+                          className={styles.iconBtnDanger}
+                          onClick={() => handleRemove(item.symbol)}
+                          title="Remove from watchlist"
+                        >
+                          <span className="material-symbols-outlined">delete</span>
+                        </Button>
+                      </div>
+                    </div>
+
+                  </div>
+                </GlassCard>
+              );
+            })}
+          </div>
+        )}
+
       </main>
+
+      {/* ── AI Analysis Modal ──────────────────────────────────────────────────── */}
+      {modal && (
+        <div
+          className={styles.modalOverlay}
+          onClick={handleCloseModal}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`AI Prediction for ${modal.symbol}`}
+        >
+          <div
+            className={styles.modalContainer}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal header */}
+            <div className={styles.modalHeader}>
+              <div className={styles.modalTitleRow}>
+                <span
+                  className="material-symbols-outlined"
+                  style={{ color: 'var(--primary)', fontSize: '1.5rem' }}
+                >
+                  psychology
+                </span>
+                <div>
+                  <p className={styles.modalSubtitle}>
+                    {modal.summary ? 'AI Neural Reasoning' : 'Generate AI Analysis'}
+                  </p>
+                  <h2 className={styles.modalTitle}>{modal.symbol}</h2>
+                </div>
+              </div>
+              <button
+                className={styles.modalCloseBtn}
+                onClick={handleCloseModal}
+                aria-label="Close"
+              >
+                <span className="material-symbols-outlined">close</span>
+              </button>
+            </div>
+
+            {/* AiAnalysis: pass initialData when viewing existing, or nothing to trigger generate flow */}
+            <div className={styles.modalBody}>
+              <AiAnalysis
+                symbol={modal.symbol}
+                initialData={modal.summary ?? undefined}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

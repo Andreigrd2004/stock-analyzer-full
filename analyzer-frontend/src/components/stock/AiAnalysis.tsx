@@ -196,11 +196,27 @@ const AnalysisModal: React.FC<ModalProps> = ({ termData, meta, onClose }) => {
 
 // ── main component ────────────────────────────────────────────────────────────
 
-export const AiAnalysis: React.FC<{ symbol: string; onPrediction?: (price: number) => void }> = ({ symbol, onPrediction }) => {
+export const AiAnalysis: React.FC<{ symbol: string; onPrediction?: (price: number) => void; initialData?: string | AiAnalysisResponse }> = ({ symbol, onPrediction, initialData }) => {
   const [analysis, setAnalysis] = useState<AiAnalysisResponse | string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [openTerm, setOpenTerm] = useState<null | 0 | 1 | 2>(null);
+
+  // If initial data is provided (from watchlist), parse and display immediately
+  useEffect(() => {
+    if (!initialData) return;
+    if (typeof initialData === 'string') {
+      try {
+        const parsed = JSON.parse(initialData);
+        setAnalysis(parsed);
+      } catch {
+        // If it's not valid JSON, treat as plain text
+        setAnalysis(initialData);
+      }
+    } else {
+      setAnalysis(initialData);
+    }
+  }, [initialData]);
 
   const handleGenerate = useCallback(async () => {
     try {

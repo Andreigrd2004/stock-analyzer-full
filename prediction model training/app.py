@@ -22,7 +22,7 @@ app = Flask(__name__)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_DIR = os.path.join(BASE_DIR, "static")
-MODEL_PATH = os.path.join(BASE_DIR, "stock_dl_model_2.h5")
+MODEL_PATH = os.path.join(BASE_DIR, "stock_dl_model_2 (1).h5")
 
 # Ensure runtime folders exist before writing generated files.
 os.makedirs(STATIC_DIR, exist_ok=True)

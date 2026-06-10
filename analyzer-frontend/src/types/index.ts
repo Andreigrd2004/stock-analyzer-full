@@ -60,6 +60,24 @@ export interface AiAnalysisResponse {
   predicted?: number;  // Actual price target from the backend ML model
 }
 
+export interface PredictionDTO {
+  stockSymbol: string;
+  summary: string;
+  action: string;
+  currentPrice: number;
+  createdAt: string;
+  validUntil: string;
+  predicted: number;
+}
+
+export interface PredictionListResponse {
+  predictions: PredictionDTO[];
+}
+
+export interface PredictionsListRequest {
+  stockSymbols: string[];
+}
+
 export interface UserStockInterest {
   id: string; // or number depending on backend
   symbol: string;

@@ -1,9 +1,6 @@
 package com.analyzer.analyzer.stock;
 
-import com.analyzer.analyzer.stock.DTO.ConversationRequest;
-import com.analyzer.analyzer.stock.DTO.ConversationResponse;
-import com.analyzer.analyzer.stock.DTO.NewsDTO;
-import com.analyzer.analyzer.stock.DTO.StockDTO;
+import com.analyzer.analyzer.stock.DTO.*;
 
 import java.util.List;
 
@@ -15,4 +12,5 @@ public interface StockService {
     String getPrediction(String stockSymbol);
     String getPriceVariation(String stockSymbol);
     ConversationResponse handleConversation(ConversationRequest request);
-}
+    PredictionListResponse getRelatedPredictions(PredictionsListRequest request);
+    }

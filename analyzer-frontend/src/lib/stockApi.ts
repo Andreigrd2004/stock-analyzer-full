@@ -24,4 +24,10 @@ export const stockApi = {
     fetchApi<AiAnalysisResponse | string>(`/stocks/prediction?symbol=${symbol}`, {
       method: 'GET', // Fixed: Backend mapping shows @GetMapping
     }),
+    
+  getRelatedPredictions: (request: { stockSymbols: string[] }) =>
+    fetchApi<any>('/stocks/get-related-predictions', {
+      method: 'POST',
+      body: JSON.stringify(request)
+    }),
 };

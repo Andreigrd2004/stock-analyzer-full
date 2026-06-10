@@ -4,6 +4,7 @@ import com.analyzer.analyzer.prediction.Prediction;
 import com.analyzer.analyzer.prediction.PredictionRepository;
 import com.analyzer.analyzer.prediction.gemini.GeminiConversationService;
 import com.analyzer.analyzer.stock.DTO.*;
+import com.analyzer.analyzer.user.UserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,12 +12,8 @@ import com.analyzer.analyzer.prediction.gemini.GeminiPredictionService;
 import com.analyzer.analyzer.price_variation.PriceVariationService;
 
 import java.time.temporal.ChronoUnit;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
-import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -35,6 +32,7 @@ public class StockServiceImpl implements StockService {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final PredictionRepository predictionRepository;
     private final GeminiConversationService geminiConversationService;
+    private final UserRepository userRepository;
 
     @Value("${app.finnhub-api-key}")
     private String apiKey;
@@ -180,6 +178,21 @@ public class StockServiceImpl implements StockService {
     public ConversationResponse handleConversation(ConversationRequest request) {
         String response = geminiConversationService.generateResponse(request);
         return new ConversationResponse(response);
+    }
+
+    public PredictionListResponse getRelatedPredictions(PredictionsListRequest request){
+        List<String> stockSymbols = request.getStockSymbols();
+        ArrayList<PredictionDTO> predictionDTOs = new ArrayList<>();
+        for(String stockSymbol : stockSymbols){
+            if(stockRepository.existsBySymbol(stockSymbol)){
+                Stock stock = stockRepository.getStockBySymbol(stockSymbol);
+                Optional<Prediction> validPrediction = predictionRepository.findValidPredictionByStock(stock);
+                validPrediction.ifPresent(p -> predictionDTOs.add(PredictionDTO.fromEntity(p, stockSymbol)));
+            }
+        }
+        PredictionListResponse response = new PredictionListResponse();
+        response.setPredictions(predictionDTOs);
+        return response;
     }
 
 }

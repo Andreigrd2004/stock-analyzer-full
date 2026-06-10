@@ -1,9 +1,7 @@
 package com.analyzer.analyzer.stock;
 
-import com.analyzer.analyzer.stock.DTO.ConversationRequest;
-import com.analyzer.analyzer.stock.DTO.ConversationResponse;
-import com.analyzer.analyzer.stock.DTO.NewsDTO;
-import com.analyzer.analyzer.stock.DTO.StockDTO;
+import com.analyzer.analyzer.stock.DTO.*;
+
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
@@ -59,5 +57,10 @@ public class StockController {
     public ResponseEntity<String> importArchive(@RequestParam("file") MultipartFile file) {
         stockDataImportService.importFromFile(file);
         return ResponseEntity.ok("Import triggered for file: " + file.getOriginalFilename());
+    }
+
+    @PostMapping(value = "/get-related-predictions", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public PredictionListResponse getRelatedPredictions(@RequestBody PredictionsListRequest request) {
+        return stockService.getRelatedPredictions(request);
     }
 }
