@@ -110,7 +110,10 @@ export const InsiderSentiment: React.FC<{ symbol: string }> = ({ symbol }) => {
              latest = p.replace('Latest MSPR:', '').trim();
            }
         }
-        else if (p.startsWith('Trend:')) trendStr = p.replace('Trend:', '').trim();
+        else if (p.startsWith('Trend')) {
+          const colonIndex = p.indexOf(':');
+          if (colonIndex !== -1) trendStr = p.slice(colonIndex + 1).trim();
+        }
         else if (p.startsWith('Data points:')) dp = p.replace('Data points:', '').replace('.', '').trim();
       });
 

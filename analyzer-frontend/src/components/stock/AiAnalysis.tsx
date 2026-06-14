@@ -44,11 +44,9 @@ const TERM_META: TermMeta[] = [
 ];
 
 function sentimentFromScore(score: number): { variant: 'success' | 'danger' | 'warning' | 'primary'; label: string } {
-  if (score >= 2) return { variant: 'success', label: 'Strong Buy' };
-  if (score === 1) return { variant: 'success', label: 'Buy' };
-  if (score === 0) return { variant: 'warning', label: 'Hold' };
-  if (score === -1) return { variant: 'danger', label: 'Sell' };
-  return { variant: 'danger', label: 'Strong Sell' };
+  if (score >= 2) return { variant: 'success', label: 'Buy' };
+  if (score === 1) return { variant: 'warning', label: 'Hold' };
+  return { variant: 'danger', label: 'Sell' };
 }
 
 /** Truncate text to a given character limit */

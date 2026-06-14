@@ -128,7 +128,9 @@ public class StockServiceImpl implements StockService {
             return "No insider sentiment data available.";
         }
 
-        List<InsiderSentimentDTO> data = dto.getData();
+        List<InsiderSentimentDTO> data = new ArrayList<>(dto.getData());
+        data.sort(Comparator.comparingInt(InsiderSentimentDTO::getYear)
+                .thenComparingInt(InsiderSentimentDTO::getMonth));
 
         double avgMspr = data.stream()
                 .mapToDouble(InsiderSentimentDTO::getMspr)
@@ -136,11 +138,12 @@ public class StockServiceImpl implements StockService {
                 .orElse(0);
 
         InsiderSentimentDTO latest = data.getLast();
-        InsiderSentimentDTO oldest = data.getFirst();
-        double trend = latest.getMspr() - oldest.getMspr();
+        int referenceIndex = Math.max(0, data.size() - 13);
+        InsiderSentimentDTO reference = data.get(referenceIndex);
+        double trend = latest.getMspr() - reference.getMspr();
 
         return String.format(
-                "Average MSPR: %.2f | Latest MSPR: %.2f (%d/%d) | Trend: %s | Data points: %d",
+                "Average MSPR: %.2f | Latest MSPR: %.2f (%d/%d) | Trend (Last 12M): %s | Data points: %d",
                 avgMspr,
                 latest.getMspr(),
                 latest.getMonth(),

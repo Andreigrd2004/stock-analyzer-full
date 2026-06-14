@@ -24,6 +24,10 @@ public class BrokerServiceImpl implements BrokerService {
     @Override
     @Transactional
     public Broker createBroker(BrokerCreateRequest request) {
+        User currentUser = getCurrentUser();
+        if(!currentUser.getRole().equals("ADMIN")) {
+            throw new BadRequestException("User is not admin.");
+        }
         if (request == null) {
             throw new BadRequestException("Request body is required.");
         }
@@ -59,6 +63,9 @@ public class BrokerServiceImpl implements BrokerService {
             throw new BadRequestException("Request body is required.");
         }
         User currentUser = getCurrentUser();
+        if(!currentUser.getRole().equals("BROKER")) {
+            throw new BadRequestException("User is not broker.");
+        }
         Broker broker = brokerRepository.findByUser_Id(currentUser.getId())
                 .orElseThrow(() -> new NotFoundException("Broker not found."));
 
