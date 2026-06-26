@@ -1,7 +1,7 @@
 version: "3.9"
 
 # ─────────────────────────────────────────────────────────────────────────────
-# StockPulse AI Analyzer — Full-stack Docker Compose
+# AI Analyzer — Full-stack Docker Compose
 #
 # Folder layout (all siblings of this file):
 #   analyzer-frontend/          → Next.js UI
@@ -35,7 +35,6 @@ services:
       - db_data:/var/lib/postgresql/data
     # Port 5432 intentionally NOT exposed to the host — db is only accessible
     # within the Docker network. Avoids conflicts with a local Postgres instance.
-    # Uncomment below only if you need direct DB access from host tools:
     # ports:
     #   - "5432:5432"
     healthcheck:
