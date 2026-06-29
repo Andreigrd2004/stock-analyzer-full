@@ -37,9 +37,9 @@ public class SecurityConfig {
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
         http.cors(Customizer.withDefaults());
-        // Disable form-based login and session logout — this is a stateless JWT API.
-        // Leaving formLogin(withDefaults()) active causes Spring Security to intercept
-        // POST /auth/login with form params BEFORE our controller receives the JSON body.
+
+
+
         http.formLogin(AbstractHttpConfigurer::disable);
         http.logout(AbstractHttpConfigurer::disable);
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

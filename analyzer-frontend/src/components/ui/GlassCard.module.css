@@ -4,7 +4,7 @@
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--color-border);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  border-radius: 0.75rem; /* xl by default */
+  border-radius: 0.75rem;
   overflow: hidden;
   position: relative;
 }

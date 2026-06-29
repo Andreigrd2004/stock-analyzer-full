@@ -1,11 +1,11 @@
-/* ─── Wrapper ─────────────────────────────────────────────── */
+
 .wrapper {
   position: relative;
   width: 100%;
   max-width: 32rem;
 }
 
-/* ─── Input row ───────────────────────────────────────────── */
+
 .inputRow {
   display: flex;
   align-items: center;
@@ -17,7 +17,7 @@
   .inputRow {
     flex-wrap: wrap;
   }
-  
+
   .inputRow > :first-child {
     flex: 1 1 100%;
   }
@@ -28,14 +28,14 @@
 
   .spinnerWrap {
     right: 1.5rem;
-    top: 2rem; /* adjust based on input height */
+    top: 2rem;
   }
 }
 
-/* ─── Spinner inside the input ────────────────────────────── */
+
 .spinnerWrap {
   position: absolute;
-  right: 8.5rem; /* sits to the left of the button */
+  right: 8.5rem;
   top: 50%;
   transform: translateY(-50%);
   pointer-events: none;
@@ -56,7 +56,7 @@
   to { transform: rotate(360deg); }
 }
 
-/* ─── Dropdown card ───────────────────────────────────────── */
+
 .dropdown {
   position: absolute;
   top: calc(100% + 0.5rem);
@@ -75,11 +75,11 @@
   overflow-y: auto;
   overflow-x: hidden;
 
-  /* Scrollbar */
+
   scrollbar-width: thin;
   scrollbar-color: rgba(var(--primary-rgb), 0.3) transparent;
 
-  /* Entrance animation */
+
   animation: dropdownIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -102,7 +102,7 @@
   }
 }
 
-/* ─── Result items ────────────────────────────────────────── */
+
 .item {
   display: flex;
   align-items: center;
@@ -159,7 +159,7 @@
   flex-shrink: 0;
 }
 
-/* ─── Empty / no results ──────────────────────────────────── */
+
 .noResults {
   padding: 1.25rem 1rem;
   text-align: center;

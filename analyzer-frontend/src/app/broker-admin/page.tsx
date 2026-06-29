@@ -9,17 +9,17 @@ import { useRole } from '@/context/RoleContext';
 import type { Broker, BrokerClick } from '../../types';
 import styles from './broker-admin.module.css';
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
 
-/** Derive the "your" broker from the list (the one that belongs to the signed-in user).
- *  For now we pick the first active broker; swap this with a real filter once the
- *  backend exposes a /brokers/me endpoint. */
+
+
+
+
 function resolveMyBroker(brokers: Broker[]): Broker | null {
   return brokers.find((b) => b.active) ?? brokers[0] ?? null;
 }
 
 function countClicksToday(clicks: BrokerClick[]): number {
-  const today = new Date().toISOString().slice(0, 10); // "YYYY-MM-DD"
+  const today = new Date().toISOString().slice(0, 10);
   return clicks.filter((c) => c.clickedAt?.startsWith(today)).length;
 }
 
@@ -30,25 +30,25 @@ function totalSpend(clicks: BrokerClick[], bidCpc: string): string {
 }
 
 function formatPosition(allBids: number[], myBid: number): number {
-  // position = how many bids are strictly higher than mine + 1
+
   const higher = allBids.filter((b) => b > myBid).length;
   return higher + 1;
 }
 
-// ── Component ─────────────────────────────────────────────────────────────────
+
 
 export default function BrokerAdminPage() {
   const router = useRouter();
   const { role, loading: roleLoading } = useRole();
 
-  // ── Role Guard ─────────────────────────────────────────────────────────────
+
   useEffect(() => {
     if (!roleLoading && role !== 'BROKER') {
       router.replace('/');
     }
   }, [role, roleLoading, router]);
 
-  // ── State ──────────────────────────────────────────────────────────────────
+
   const [broker, setBroker] = useState<Broker | null>(null);
   const [allBrokers, setAllBrokers] = useState<Broker[]>([]);
   const [clicks, setClicks] = useState<BrokerClick[]>([]);
@@ -63,7 +63,7 @@ export default function BrokerAdminPage() {
   const [error, setError] = useState<string | null>(null);
   const [saveMsg, setSaveMsg] = useState<string | null>(null);
 
-  // ── Data Fetching ──────────────────────────────────────────────────────────
+
   const loadData = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -93,16 +93,16 @@ export default function BrokerAdminPage() {
     }
   }, []);
 
-  // Only fetch data once the role is confirmed as BROKER.
-  // This prevents the GET /brokers call from firing during the brief window
-  // before the role guard fires and redirects non-BROKER users.
+
+
+
   useEffect(() => {
-    if (roleLoading) return;          // wait until role is resolved
-    if (role !== 'BROKER') return;    // guard will redirect; don't fetch
+    if (roleLoading) return;
+    if (role !== 'BROKER') return;
     loadData();
   }, [role, roleLoading, loadData]);
 
-  // ── Save ───────────────────────────────────────────────────────────────────
+
   const handleSave = async () => {
     if (!broker) return;
     setSaving(true);
@@ -117,7 +117,7 @@ export default function BrokerAdminPage() {
         redirectUrl: broker.redirectUrl,
       });
       setBroker(updated);
-      // Refresh bid amounts so the chart stays accurate
+
       const bids = await brokerApi.getAllBidAmounts();
       setAllBidAmounts(bids);
       setSaveMsg('Campaign saved successfully.');
@@ -128,13 +128,13 @@ export default function BrokerAdminPage() {
     }
   };
 
-  // ── Derived values ─────────────────────────────────────────────────────────
+
   const myBidNum = parseFloat(bidAmount) || 0;
   const clicksToday = countClicksToday(clicks);
   const dailySpend = totalSpend(clicks, bidAmount);
   const position = allBidAmounts.length > 0 ? formatPosition(allBidAmounts, myBidNum) : null;
 
-  // Build bars: sort all bid amounts desc, cap at 5 for readability
+
   const sortedBids = [...allBidAmounts].sort((a, b) => a - b);
   const maxBid = Math.max(...sortedBids, myBidNum, 0.01);
 
@@ -148,7 +148,7 @@ export default function BrokerAdminPage() {
     };
   });
 
-  // ── Render ─────────────────────────────────────────────────────────────────
+
   return (
     <>
       <Header activePage="broker-admin" />
@@ -166,7 +166,7 @@ export default function BrokerAdminPage() {
           </div>
         </header>
 
-        {/* Global error banner */}
+        {}
         {error && (
           <div className={styles.errorBanner} role="alert">
             <span className="material-symbols-outlined">error</span>
@@ -181,7 +181,7 @@ export default function BrokerAdminPage() {
           </div>
         ) : (
           <div className={styles.grid}>
-            {/* ── Left Panel: Campaign Control ── */}
+            {}
             <section className={`${styles.glassCard} ${styles.leftPanel}`}>
               <div className={styles.cardHeader}>
                 <h2 className={styles.cardTitle}>
@@ -191,7 +191,7 @@ export default function BrokerAdminPage() {
                   Campaign Control
                 </h2>
 
-                {/* Active toggle */}
+                {}
                 <label className={styles.toggleLabel} htmlFor="campaign-toggle">
                   <input
                     id="campaign-toggle"
@@ -209,7 +209,7 @@ export default function BrokerAdminPage() {
                 </label>
               </div>
 
-              {/* Inputs */}
+              {}
               <div className={styles.inputs}>
                 <div className={styles.inputGroup}>
                   <label className={styles.inputLabel} htmlFor="bid-amount">
@@ -248,7 +248,7 @@ export default function BrokerAdminPage() {
                 </div>
               </div>
 
-              {/* Save button + feedback */}
+              {}
               <div className={styles.saveRow}>
                 <button
                   className={`${styles.saveBtn} ${saving ? styles.saveBtnDisabled : ''}`}
@@ -269,7 +269,7 @@ export default function BrokerAdminPage() {
                 )}
               </div>
 
-              {/* Real-Time Performance */}
+              {}
               <div className={styles.performanceBox}>
                 <h4 className={styles.performanceTitle}>
                   <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>
@@ -300,7 +300,7 @@ export default function BrokerAdminPage() {
               </div>
             </section>
 
-            {/* ── Right Panel: Market Competitive Landscape ── */}
+            {}
             <section className={`${styles.glassCard} ${styles.rightPanel}`}>
               <div className={styles.panelGlow} />
 
@@ -314,9 +314,9 @@ export default function BrokerAdminPage() {
                 <span className={`${styles.liveBadge} ${styles.animateGlow}`}>Live Bids</span>
               </div>
 
-              {/* Bar Chart */}
+              {}
               <div className={styles.chartArea}>
-                {/* Y-Axis */}
+                {}
                 <div className={styles.yAxis}>
                   <span>${maxBid.toFixed(2)}</span>
                   <span>${(maxBid * 0.75).toFixed(2)}</span>
@@ -324,7 +324,7 @@ export default function BrokerAdminPage() {
                   <span>${(maxBid * 0.25).toFixed(2)}</span>
                 </div>
 
-                {/* Bars */}
+                {}
                 <div className={styles.barsContainer}>
                   {bars.length > 0 ? bars.map((bar) => (
                     <div
@@ -352,7 +352,7 @@ export default function BrokerAdminPage() {
                 </div>
               </div>
 
-              {/* Market Insight */}
+              {}
               <div className={styles.insightBox}>
                 <span className="material-symbols-outlined" style={{ color: 'var(--primary)', marginTop: '2px' }}>
                   lightbulb

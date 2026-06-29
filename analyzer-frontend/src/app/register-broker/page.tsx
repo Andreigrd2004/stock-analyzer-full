@@ -10,19 +10,19 @@ import { brokerApi } from '@/lib/brokerApi';
 import { useRole } from '@/context/RoleContext';
 import styles from './register-broker.module.css';
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
+
 
 function validateUrl(value: string): boolean {
   try { new URL(value); return true; } catch { return false; }
 }
 
-// ── Component ─────────────────────────────────────────────────────────────────
+
 
 export default function RegisterBrokerPage() {
   const router = useRouter();
   const { role, loading: roleLoading } = useRole();
 
-  // ── Role Guard ─────────────────────────────────────────────────────────────
+
   useEffect(() => {
     if (!roleLoading && role !== 'ADMIN') {
       router.replace('/');
@@ -98,7 +98,7 @@ export default function RegisterBrokerPage() {
         <div className={styles.bgGlowRight} aria-hidden />
 
         <div className={styles.card}>
-          {/* ── Header ── */}
+          {}
           <div className={styles.header}>
             <div className={styles.logo}>
               <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1", fontSize: '1.4rem' }}>
@@ -113,7 +113,7 @@ export default function RegisterBrokerPage() {
             </div>
           </div>
 
-          {/* ── Server error ── */}
+          {}
           {serverError && (
             <div className={styles.serverError} role="alert">
               <span className="material-symbols-outlined">error</span>
@@ -121,10 +121,10 @@ export default function RegisterBrokerPage() {
             </div>
           )}
 
-          {/* ── Form ── */}
+          {}
           <form className={styles.form} onSubmit={handleSubmit} noValidate>
 
-            {/* Row 0: User ID (full-width) */}
+            {}
             <div className={styles.inputGroup}>
               <label htmlFor="user-id" className={styles.label}>User ID</label>
               <TextInput
@@ -143,7 +143,7 @@ export default function RegisterBrokerPage() {
               }
             </div>
 
-            {/* Row 1: Company Name + Redirect URL */}
+            {}
             <div className={styles.row}>
               <div className={styles.inputGroup}>
                 <label htmlFor="company-name" className={styles.label}>Company Name</label>
@@ -172,7 +172,7 @@ export default function RegisterBrokerPage() {
               </div>
             </div>
 
-            {/* Row 2: Bid Amount + Daily Budget */}
+            {}
             <div className={styles.row}>
               <div className={styles.inputGroup}>
                 <label htmlFor="bid-amount" className={styles.label}>Bid Amount (CPC)</label>
@@ -211,9 +211,9 @@ export default function RegisterBrokerPage() {
               </div>
             </div>
 
-            {/* Row 3: Toggle + Info side by side */}
+            {}
             <div className={styles.row}>
-              {/* Active toggle */}
+              {}
               <label htmlFor="active-toggle" className={styles.toggleRow}>
                 <input
                   id="active-toggle"
@@ -233,7 +233,7 @@ export default function RegisterBrokerPage() {
                 </span>
               </label>
 
-              {/* Info callout */}
+              {}
               <div className={styles.infoBox}>
                 <span className="material-symbols-outlined" style={{ color: 'var(--primary)', flexShrink: 0, fontSize: '1.1rem' }}>
                   lightbulb
@@ -244,7 +244,7 @@ export default function RegisterBrokerPage() {
               </div>
             </div>
 
-            {/* Submit */}
+            {}
             <Button
               type="submit"
               variant="primary"

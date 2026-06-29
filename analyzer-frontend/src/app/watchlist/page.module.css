@@ -1,4 +1,4 @@
-/* ─── Layout ────────────────────────────────────────────────────────────────── */
+
 .main {
   max-width: 80rem;
   margin: 0 auto;
@@ -28,7 +28,7 @@
   font-size: 1.75rem;
 }
 
-/* ─── Grid ──────────────────────────────────────────────────────────────────── */
+
 .gridContainer {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -36,7 +36,7 @@
   align-items: stretch;
 }
 
-/* ─── Empty / Error / Loading ───────────────────────────────────────────────── */
+
 .emptyState {
   padding: 4rem 2rem;
   text-align: center;
@@ -55,8 +55,8 @@
   margin-bottom: 0.5rem;
 }
 
-/* ─── Inner card wrapper ─────────────────────────────────────────────────────
-   NOTE: GlassCard itself is the visual container; these styles go INSIDE it. */
+
+
 .cardInner {
   padding: 1.25rem;
   display: flex;
@@ -66,7 +66,7 @@
   box-sizing: border-box;
 }
 
-/* ─── Card Header ───────────────────────────────────────────────────────────── */
+
 .cardHeader {
   display: flex;
   justify-content: space-between;
@@ -112,7 +112,7 @@
   color: var(--primary);
 }
 
-/* ─── Price Section ─────────────────────────────────────────────────────────── */
+
 .priceSection {
   display: flex;
   justify-content: space-between;
@@ -152,7 +152,7 @@
 .textDanger  { color: var(--danger); }
 .errorText   { color: var(--color-text-muted); }
 
-/* ─── Prediction Strip ──────────────────────────────────────────────────────── */
+
 .predictionStrip {
   display: flex;
   justify-content: space-between;
@@ -161,7 +161,7 @@
   background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.12), rgba(var(--primary-rgb), 0.04));
   border-radius: 0.5rem;
   border: 1px solid rgba(var(--primary-rgb), 0.2);
-  min-height: 3.25rem;   /* reserved so cards without prediction stay same height */
+  min-height: 3.25rem;
 }
 
 .predictionTarget {
@@ -184,12 +184,12 @@
   font-style: italic;
 }
 
-/* ─── Card Actions Row ──────────────────────────────────────────────────────── */
+
 .cardActions {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: auto;   /* pushes to bottom — ensures equal card heights */
+  margin-top: auto;
 }
 
 .actionBtnsRight {
@@ -211,7 +211,7 @@
   color: var(--danger);
 }
 
-/* "Generate AI" button on cards that have no prediction yet */
+
 .generateBtn {
   color: var(--primary);
   border: 1px solid rgba(var(--primary-rgb), 0.3);
@@ -229,7 +229,7 @@
 }
 
 
-/* ─── Modal Overlay ───────────────────────────────────────────── */
+
 .modalOverlay {
   position: fixed;
   inset: 0;
@@ -321,7 +321,7 @@
   flex: 1;
 }
 
-/* ─── Responsive ────────────────────────────────────────────────────────────── */
+
 @media (max-width: 768px) {
   .main {
     padding: 1rem;

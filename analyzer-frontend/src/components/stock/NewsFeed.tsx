@@ -17,10 +17,10 @@ export const NewsFeed: React.FC<{ symbol: string }> = ({ symbol }) => {
     const loadNews = async () => {
       try {
         setLoading(true);
-        // Using a mock range for the last 14 days
+
         const res = await stockApi.getNews(symbol);
         if (!active) return;
-        
+
         if (Array.isArray(res)) {
           setNews(res);
         } else if (res && typeof res === 'object' && 'items' in res && Array.isArray((res as any).items)) {
@@ -68,10 +68,10 @@ export const NewsFeed: React.FC<{ symbol: string }> = ({ symbol }) => {
           <div className={styles.emptyState}>No recent news found for {symbol}.</div>
         ) : (
           news.slice(0, 10).map((item, idx) => (
-            <a 
-              key={item.id || idx} 
-              href={item.url} 
-              target="_blank" 
+            <a
+              key={item.id || idx}
+              href={item.url}
+              target="_blank"
               rel="noopener noreferrer"
               className={styles.newsItem}
             >

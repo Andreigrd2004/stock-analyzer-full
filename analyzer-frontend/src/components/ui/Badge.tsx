@@ -8,11 +8,11 @@ interface BadgeProps {
   glow?: boolean;
 }
 
-export const Badge: React.FC<BadgeProps> = ({ 
-  children, 
-  variant = 'primary', 
-  className = '', 
-  glow = false 
+export const Badge: React.FC<BadgeProps> = ({
+  children,
+  variant = 'primary',
+  className = '',
+  glow = false
 }) => {
   const variantClass = styles[variant];
   const glowClass = glow ? styles.glow : '';

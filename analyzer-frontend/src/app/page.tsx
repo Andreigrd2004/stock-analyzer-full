@@ -16,7 +16,7 @@ export default function Home() {
       <main className={styles.main}>
         <section className={styles.hero}>
           <div className={styles.heroBgGlow} />
-          
+
           <div className={styles.heroContent}>
             <Badge variant="primary" glow>AI-Powered Insights</Badge>
             <h1 className={styles.title}>
@@ -25,7 +25,7 @@ export default function Home() {
             <p className={styles.subtitle}>
               Discover meaningful data with real-time tracking, historical sentiment, and proprietary AI analysis algorithms.
             </p>
-            
+
             <SymbolSearch
               placeholder="Search symbol or company name (e.g. AAPL, Tesla)"
               onSelect={(sym) => router.push(`/stock/${sym}`)}

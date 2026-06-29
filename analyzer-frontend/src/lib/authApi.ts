@@ -16,7 +16,7 @@ export const authApi = {
     });
   },
 
-  /** Returns the role string of the currently authenticated user, e.g. "BROKER" or "ADMIN". */
+
   getRole: (): Promise<string> => fetchApi<string>('/auth/get-role'),
 };
 

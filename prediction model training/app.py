@@ -6,7 +6,7 @@ import tempfile
 import time
 
 import matplotlib
-# Use a non-GUI backend to avoid Tk/Tcl thread issues in server environments.
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 MODEL_PATH = os.path.join(BASE_DIR, "stock_dl_model_2 (1).h5")
 
-# Ensure runtime folders exist before writing generated files.
+
 os.makedirs(STATIC_DIR, exist_ok=True)
 
 _model = None
@@ -110,7 +110,7 @@ def predict_with_subprocess(x_test):
 
 def run_prediction(stock):
     start = dt.datetime(2020, 1, 1)
-    # Get data up to today
+
     end = dt.datetime.today()
 
     now_ts = time.time()
@@ -118,7 +118,7 @@ def run_prediction(stock):
     if cached and now_ts - cached["timestamp"] < PREDICTION_CACHE_TTL_SECONDS:
         return cached["result"]
 
-    # Download data for the requested stock only
+
     df = yf.download(stock, start=start, end=end, auto_adjust=False, progress=False)
     if df.empty or 'Close' not in df:
         if _is_rate_limited(stock):
@@ -159,15 +159,15 @@ def run_prediction(stock):
         y_test.append(input_data[i, 0])
 
     x_test, y_test = np.array(x_test), np.array(y_test)
-    # Ensure shape is (samples, 60, 1) to match the new generalized LSTM requirements
+
     x_test = np.reshape(x_test, (x_test.shape[0], x_test.shape[1], 1))
-    
+
     if x_test.size == 0:
         raise DataUnavailableError(f"Not enough sequences to predict for '{stock}'.")
 
     y_predicted = predict_with_subprocess(x_test)
 
-    # Clean inverse transformation via 1D array handling
+
     y_predicted_actual = scaler.inverse_transform(np.ravel(y_predicted).reshape(-1, 1))[:, 0]
     y_test_actual = scaler.inverse_transform(np.ravel(y_test).reshape(-1, 1))[:, 0]
 
@@ -208,14 +208,14 @@ def index():
         y_test = result["y_test"]
         y_predicted = result["y_predicted"]
 
-        # Only plot the closing price
+
         fig1, ax1 = plt.subplots(figsize=(12, 6))
-        
-        # When yf.download is called with a single stock, df.Close is typically a Series or a DataFrame with 1 Column depending on version
+
+
         close_series = df['Close']
         if isinstance(close_series, pd.DataFrame):
             close_series = close_series.iloc[:, 0]
-            
+
         ax1.plot(close_series, 'y', label=f'{stock} Closing Price')
         ax1.plot(ema20, 'g', label='EMA 20')
         ax1.plot(ema50, 'r', label='EMA 50')

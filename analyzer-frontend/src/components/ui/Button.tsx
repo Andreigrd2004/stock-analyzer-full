@@ -6,18 +6,18 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   glow?: boolean;
 }
 
-export const Button: React.FC<ButtonProps> = ({ 
-  children, 
-  variant = 'primary', 
+export const Button: React.FC<ButtonProps> = ({
+  children,
+  variant = 'primary',
   glow = false,
   className = '',
-  ...props 
+  ...props
 }) => {
   const variantClass = styles[variant];
   const glowClass = glow ? styles.glow : '';
 
   return (
-    <button 
+    <button
       className={`${styles.button} ${variantClass} ${glowClass} ${className}`}
       {...props}
     >

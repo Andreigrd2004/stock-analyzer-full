@@ -23,8 +23,8 @@ export default function LoginPage() {
       const response = await authApi.login({ username, password });
       if (response.accessToken) {
         document.cookie = `accessToken=${response.accessToken}; path=/; max-age=86400; SameSite=Lax`;
-        // Use a full-page navigation so the Next.js middleware re-runs
-        // and reads the newly-set cookie before rendering the home page.
+
+
         window.location.href = '/';
       } else {
         setError('Login failed. No token received.');
@@ -39,7 +39,7 @@ export default function LoginPage() {
   return (
     <main className={styles.main}>
       <div className={styles.bgGlow} />
-      
+
       <GlassCard className={styles.card} glow="primary">
         <div className={styles.header}>
           <Link href="/" className={styles.logo}>
@@ -53,30 +53,30 @@ export default function LoginPage() {
 
         <form className={styles.form} onSubmit={handleSubmit}>
           {error && <div style={{ color: 'var(--danger)', fontSize: '0.875rem', textAlign: 'center' }}>{error}</div>}
-          
+
           <div className={styles.inputGroup}>
             <label htmlFor="username" className={styles.label}>Username</label>
-            <TextInput 
+            <TextInput
               id="username"
-              type="text" 
-              icon="person" 
-              placeholder="Your username" 
+              type="text"
+              icon="person"
+              placeholder="Your username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
             />
           </div>
-          
+
           <div className={styles.inputGroup}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <label htmlFor="password" className={styles.label}>Password</label>
               <Link href="#" className={styles.forgotPassword}>Forgot password?</Link>
             </div>
-            <TextInput 
+            <TextInput
               id="password"
-              type="password" 
-              icon="lock" 
-              placeholder="••••••••" 
+              type="password"
+              icon="lock"
+              placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required

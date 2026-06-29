@@ -5,10 +5,10 @@ interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   icon?: string;
 }
 
-export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(({ 
-  icon, 
-  className = '', 
-  ...props 
+export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(({
+  icon,
+  className = '',
+  ...props
 }, ref) => {
   return (
     <div className={`${styles.wrapper} ${className}`}>
@@ -17,7 +17,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(({
           {icon}
         </span>
       )}
-      <input 
+      <input
         ref={ref}
         className={`${styles.input} ${icon ? styles.withIcon : ''}`}
         {...props}

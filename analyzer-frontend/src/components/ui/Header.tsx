@@ -21,7 +21,7 @@ export const Header: React.FC<HeaderProps> = ({ activePage = 'dashboard' }) => {
   const { role } = useRole();
 
   useEffect(() => {
-    // Get username from cookie/JWT
+
     const getUsername = () => {
       const match = document.cookie.match(/(^|;)\s*accessToken\s*=\s*([^;]+)/);
       if (match) {
@@ -44,7 +44,7 @@ export const Header: React.FC<HeaderProps> = ({ activePage = 'dashboard' }) => {
 
     setUsername(getUsername());
 
-    // Click outside listener
+
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsDropdownOpen(false);
@@ -56,7 +56,7 @@ export const Header: React.FC<HeaderProps> = ({ activePage = 'dashboard' }) => {
   }, []);
 
   const handleLogout = () => {
-    // Clear cookie
+
     document.cookie = 'accessToken=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     router.push('/login');
   };
@@ -65,8 +65,8 @@ export const Header: React.FC<HeaderProps> = ({ activePage = 'dashboard' }) => {
     <header className={styles.header}>
       <div className={styles.container}>
         <div className={styles.logoSection}>
-          <button 
-            className={styles.mobileMenuToggle} 
+          <button
+            className={styles.mobileMenuToggle}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -95,10 +95,10 @@ export const Header: React.FC<HeaderProps> = ({ activePage = 'dashboard' }) => {
         </div>
 
         <div className={styles.actionSection}>
-          
+
           <div className={styles.userActions} ref={dropdownRef}>
-            <button 
-              className={styles.avatar} 
+            <button
+              className={styles.avatar}
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               aria-expanded={isDropdownOpen}
             >
@@ -122,20 +122,20 @@ export const Header: React.FC<HeaderProps> = ({ activePage = 'dashboard' }) => {
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
+      {}
       {isMobileMenuOpen && (
         <div className={styles.mobileMenu}>
           <nav className={styles.mobileNav}>
-            <Link 
-              href="/" 
+            <Link
+              href="/"
               className={activePage === 'dashboard' ? styles.activeMobileLink : styles.mobileNavLink}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               <span className="material-symbols-outlined">dashboard</span>
               Dashboard
             </Link>
-            <Link 
-              href="/watchlist" 
+            <Link
+              href="/watchlist"
               className={activePage === 'watchlist' ? styles.activeMobileLink : styles.mobileNavLink}
               onClick={() => setIsMobileMenuOpen(false)}
             >
@@ -143,8 +143,8 @@ export const Header: React.FC<HeaderProps> = ({ activePage = 'dashboard' }) => {
               Watchlist
             </Link>
             {role === 'BROKER' && (
-              <Link 
-                href="/broker-admin" 
+              <Link
+                href="/broker-admin"
                 className={activePage === 'broker-admin' ? styles.activeMobileLink : styles.mobileNavLink}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
@@ -153,8 +153,8 @@ export const Header: React.FC<HeaderProps> = ({ activePage = 'dashboard' }) => {
               </Link>
             )}
             {role === 'ADMIN' && (
-              <Link 
-                href="/register-broker" 
+              <Link
+                href="/register-broker"
                 className={activePage === 'register-broker' ? styles.activeMobileLink : styles.mobileNavLink}
                 onClick={() => setIsMobileMenuOpen(false)}
               >

@@ -19,12 +19,12 @@ export const InsiderSentiment: React.FC<{ symbol: string }> = ({ symbol }) => {
       try {
         const res = await stockApi.getInsiderSentiment(symbol);
         if (!active) return;
-        
+
         let sentimentData: InsiderSentimentResponse | null = null;
         let textSummary: string | null = null;
 
         if (typeof res === 'string') {
-          // Only attempt parse if it looks like JSON
+
           const trimmed = res.trim();
           if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
             try {
@@ -41,7 +41,7 @@ export const InsiderSentiment: React.FC<{ symbol: string }> = ({ symbol }) => {
 
         setSummary(textSummary);
 
-        // Use up to the 3 most recent entries
+
         if (sentimentData && sentimentData.data && sentimentData.data.length > 0) {
           const sorted = [...sentimentData.data].sort((a, b) => {
             if (a.year !== b.year) return b.year - a.year;
@@ -93,12 +93,12 @@ export const InsiderSentiment: React.FC<{ symbol: string }> = ({ symbol }) => {
 
   if (summary && dataPoints.length === 0) {
     const isMetricsFormat = summary.includes('Average MSPR:') && summary.includes('Latest MSPR:');
-    
+
     if (isMetricsFormat) {
       const parts = summary.split('|').map(p => p.trim());
-      
+
       let avg = '', latest = '', latestPeriod = '', trendStr = '', dp = '';
-      
+
       parts.forEach(p => {
         if (p.startsWith('Average MSPR:')) avg = p.replace('Average MSPR:', '').trim();
         else if (p.startsWith('Latest MSPR:')) {
@@ -164,12 +164,12 @@ export const InsiderSentiment: React.FC<{ symbol: string }> = ({ symbol }) => {
     );
   }
 
-  if (dataPoints.length === 0) return null; // Final safety check
+  if (dataPoints.length === 0) return null;
 
   const latestData = dataPoints[0];
   const latestMspr = latestData.mspr;
   const avgMspr = dataPoints.reduce((sum, item) => sum + item.mspr, 0) / dataPoints.length;
-  
+
   let trend = "Stable";
   if (latestMspr < avgMspr - 0.5) trend = "Deteriorating";
   else if (latestMspr > avgMspr + 0.5) trend = "Improving";

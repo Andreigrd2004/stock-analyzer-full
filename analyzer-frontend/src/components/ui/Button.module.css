@@ -4,10 +4,10 @@
   justify-content: center;
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem; /* lg */
-  font-weight: 700; /* bold */
+  border-radius: 0.5rem;
+  font-weight: 700;
   font-family: inherit;
-  font-size: 0.875rem; /* text-sm */
+  font-size: 0.875rem;
   cursor: pointer;
   transition: all 0.2s ease;
   border: none;
@@ -22,7 +22,7 @@
   cursor: not-allowed;
 }
 
-/* Variants */
+
 .primary {
   background-color: var(--primary);
   color: #fff;
@@ -51,7 +51,7 @@
   background-color: rgba(var(--primary-rgb), 0.05);
 }
 
-/* Glow Effect */
+
 .glow.primary {
   box-shadow: 0 0 20px rgba(var(--primary-rgb), 0.4);
 }

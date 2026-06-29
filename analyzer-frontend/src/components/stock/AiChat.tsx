@@ -15,7 +15,7 @@ interface AiChatProps {
   currentPrice: string;
 }
 
-/** Convert message array → plain-text history the backend expects */
+
 function buildHistoryString(messages: Message[]): string {
   return messages
     .map((m) => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`)
@@ -30,14 +30,14 @@ export const AiChat: React.FC<AiChatProps> = ({ symbol, companyName, currentPric
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Auto-scroll to latest message
+
   useEffect(() => {
     if (isOpen) {
       messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages, isOpen]);
 
-  // Focus input when opened
+
   useEffect(() => {
     if (isOpen) {
       setTimeout(() => inputRef.current?.focus(), 150);
@@ -61,7 +61,7 @@ export const AiChat: React.FC<AiChatProps> = ({ symbol, companyName, currentPric
         companyName,
         stockSymbol: symbol,
         currentPrice,
-        conversationHistory: buildHistoryString(messages), // history BEFORE current msg
+        conversationHistory: buildHistoryString(messages),
       });
 
       setMessages((prev) => [
@@ -92,9 +92,9 @@ export const AiChat: React.FC<AiChatProps> = ({ symbol, companyName, currentPric
 
   return (
     <div className={styles.chatRoot}>
-      {/* ── Floating Chat Window ── */}
+      {}
       <div className={`${styles.chatWindow} ${isOpen ? styles.chatWindowOpen : ''}`}>
-        {/* Header */}
+        {}
         <div className={styles.chatHeader}>
           <div className={styles.chatHeaderLeft}>
             <span className={`material-symbols-outlined ${styles.headerIcon}`}>auto_awesome</span>
@@ -111,7 +111,7 @@ export const AiChat: React.FC<AiChatProps> = ({ symbol, companyName, currentPric
           </button>
         </div>
 
-        {/* Messages */}
+        {}
         <div className={styles.messages}>
           {messages.length === 0 && (
             <div className={styles.emptyChat}>
@@ -171,7 +171,7 @@ export const AiChat: React.FC<AiChatProps> = ({ symbol, companyName, currentPric
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Input */}
+        {}
         <div className={styles.inputRow}>
           <input
             ref={inputRef}
@@ -195,7 +195,7 @@ export const AiChat: React.FC<AiChatProps> = ({ symbol, companyName, currentPric
         </div>
       </div>
 
-      {/* ── FAB Toggle Button ── */}
+      {}
       <button
         className={styles.fab}
         onClick={toggleChat}

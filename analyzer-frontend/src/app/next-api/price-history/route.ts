@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-/**
- * GET /api/price-history?symbol=AAPL
- *
- * Server-side proxy to Yahoo Finance. Normalizes the response to the same
- * shape as FinnhubCandleResponse so the client needs no changes.
- * No API key required — works on any free plan.
- */
+
+
+
+
+
+
+
 export async function GET(req: NextRequest) {
   const symbol = req.nextUrl.searchParams.get('symbol');
 
@@ -21,13 +21,13 @@ export async function GET(req: NextRequest) {
   try {
     const res = await fetch(yahooUrl, {
       headers: {
-        // Yahoo requires a real User-Agent header
+
         'User-Agent':
           'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
           '(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
         Accept: 'application/json',
       },
-      // Cache for 1 hour on the server — monthly bars don't change minute-by-minute
+
       next: { revalidate: 3600 },
     });
 
@@ -48,7 +48,7 @@ export async function GET(req: NextRequest) {
     const { timestamp } = result;
     const quote = result.indicators?.quote?.[0] ?? {};
 
-    // Normalize to FinnhubCandleResponse shape
+
     const normalized = {
       s: 'ok' as const,
       t: (timestamp as number[]) ?? [],

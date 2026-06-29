@@ -1,4 +1,4 @@
-/* ── Root wrapper: positions FAB + window in the fixed corner ── */
+
 .chatRoot {
   position: fixed;
   bottom: 1.5rem;
@@ -10,7 +10,7 @@
   gap: 1rem;
 }
 
-/* ── Chat window ── */
+
 .chatWindow {
   width: 22rem;
   max-height: 0;
@@ -43,7 +43,7 @@
   transform: translateY(0) scale(1);
 }
 
-/* ── Header ── */
+
 .chatHeader {
   display: flex;
   align-items: center;
@@ -115,7 +115,7 @@
   color: #fff;
 }
 
-/* ── Messages area ── */
+
 .messages {
   flex: 1;
   overflow-y: auto;
@@ -135,7 +135,7 @@
   border-radius: 4px;
 }
 
-/* ── Empty state ── */
+
 .emptyChat {
   display: flex;
   flex-direction: column;
@@ -187,7 +187,7 @@
   color: #fff;
 }
 
-/* ── Message bubbles ── */
+
 .messageBubble {
   display: flex;
   align-items: flex-start;
@@ -238,7 +238,7 @@
   border-radius: 1rem 1rem 1rem 0.25rem;
 }
 
-/* ── Typing indicator ── */
+
 .typingIndicator {
   display: flex;
   align-items: center;
@@ -265,7 +265,7 @@
   animation-delay: 0.4s;
 }
 
-/* ── Input row ── */
+
 .inputRow {
   display: flex;
   align-items: center;
@@ -331,7 +331,7 @@
   font-size: 1.1rem;
 }
 
-/* ── FAB ── */
+
 .fab {
   position: relative;
   width: 3.5rem;
@@ -370,7 +370,7 @@
   animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
-/* ── Unread badge ── */
+
 .unreadBadge {
   position: absolute;
   top: -0.2rem;
@@ -389,7 +389,7 @@
   line-height: 1;
 }
 
-/* ── Keyframes ── */
+
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.3; }
@@ -410,7 +410,7 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Responsive ── */
+
 @media (max-width: 480px) {
   .chatWindow {
     width: calc(100vw - 2rem);

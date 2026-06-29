@@ -1,11 +1,11 @@
-// Define API base url. Assuming it runs on typical Spring Boot port 8080 or passed via env in Next.js
+
 export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 
-// Fetch wrapper for consistent options and error handling
+
 export async function fetchApi<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const url = `${API_BASE_URL}${endpoint}`;
-  
-  // Isomorphic way to get token on client side
+
+
   let token = null;
   if (typeof window !== 'undefined') {
     const match = document.cookie.match(/(^|;)\s*accessToken\s*=\s*([^;]+)/);
@@ -27,7 +27,7 @@ export async function fetchApi<T>(endpoint: string, options: RequestInit = {}): 
     headers,
   });
 
-  // Handle HTML response indicating authentication redirect
+
   const contentType = response.headers.get('content-type');
   if (contentType && contentType.includes('text/html')) {
     throw new Error('Authentication Required. Endpoint is protected.');
@@ -39,13 +39,13 @@ export async function fetchApi<T>(endpoint: string, options: RequestInit = {}): 
     }
     const errText = await response.text();
 
-    // Log the true actual error for debugging purposes in the console
+
     console.error(`Backend Error [${response.status}]:`, errText);
 
-    // Map status codes to soft messages
+
     let friendlyMessage = 'An unexpected error occurred while communicating with the server.';
-    
-    // Attempt to parse backend error message
+
+
     let backendMessage = '';
     try {
       const errObj = JSON.parse(errText);
@@ -71,7 +71,7 @@ export async function fetchApi<T>(endpoint: string, options: RequestInit = {}): 
   try {
     return JSON.parse(text);
   } catch (e) {
-    // If the response is not valid JSON, return the raw text
+
     return text as unknown as T;
   }
 }

@@ -3,10 +3,10 @@ import type { FinnhubSearchResult, FinnhubSearchResponse, FinnhubCandleResponse 
 const FINNHUB_API_KEY = process.env.NEXT_PUBLIC_FINNHUB_API_KEY ?? 'YOUR_FINNHUB_API_KEY';
 const FINNHUB_BASE = 'https://finnhub.io/api/v1';
 
-/**
- * Searches for stock symbols using the Finnhub /search endpoint.
- * Supports cancellation via AbortController signal to prevent stale results.
- */
+
+
+
+
 export async function searchSymbols(
   query: string,
   signal?: AbortSignal
@@ -25,11 +25,11 @@ export async function searchSymbols(
   return data.result ?? [];
 }
 
-/**
- * Fetches monthly OHLCV candle data for the last 12 months.
- * Routes through our own Next.js API proxy (/api/price-history) which
- * calls Yahoo Finance server-side — no premium account needed.
- */
+
+
+
+
+
 export async function fetchMonthlyCandles(
   symbol: string,
   signal?: AbortSignal

@@ -23,7 +23,7 @@ export const PriceOverview: React.FC<{ symbol: string }> = ({ symbol }) => {
 
   useEffect(() => {
     let active = true;
-    
+
     const loadData = async () => {
       try {
         setLoading(true);
@@ -45,7 +45,7 @@ export const PriceOverview: React.FC<{ symbol: string }> = ({ symbol }) => {
               dataObj = JSON.parse(rawChange);
             } catch (e) { }
           }
-          
+
           if (Array.isArray(dataObj)) {
             dataObj = dataObj[0];
           }
@@ -59,7 +59,7 @@ export const PriceOverview: React.FC<{ symbol: string }> = ({ symbol }) => {
               pc: parseFloat(dataObj.pc ?? dataObj.previousClose ?? 0) || 0,
               t: dataObj.t ? (typeof dataObj.t === 'string' ? parseFloat(dataObj.t) : dataObj.t) : Date.now()
             };
-            
+
             finalChange = dataObj;
           }
         }
@@ -70,7 +70,7 @@ export const PriceOverview: React.FC<{ symbol: string }> = ({ symbol }) => {
         if (finalChange && Object.keys(finalChange).length > 0) {
           setPriceChange(finalChange);
         }
-        
+
         if (!finalQuote && !finalChange) {
           setError('Data unreachable or malformed.');
         }
@@ -156,9 +156,9 @@ export const PriceOverview: React.FC<{ symbol: string }> = ({ symbol }) => {
           <Button variant="primary" className={styles.tradeBtn} onClick={() => setIsBrokerModalOpen(true)}>
             Trade
           </Button>
-          <Button 
-            variant="secondary" 
-            className={styles.iconBtn} 
+          <Button
+            variant="secondary"
+            className={styles.iconBtn}
             onClick={handleAddWatchlist}
             disabled={isAddingWatchlist || watchlistSuccess}
           >
@@ -206,7 +206,7 @@ export const PriceOverview: React.FC<{ symbol: string }> = ({ symbol }) => {
             const field = interval as keyof StockPriceChange;
             const val = priceChange[field] as number;
             if (val === undefined) return null;
-            
+
             const isPos = val >= 0;
             return (
               <div key={interval} className={styles.intervalBadge}>
@@ -220,10 +220,10 @@ export const PriceOverview: React.FC<{ symbol: string }> = ({ symbol }) => {
         </div>
       )}
 
-      <BrokerModal 
-        isOpen={isBrokerModalOpen} 
-        onClose={() => setIsBrokerModalOpen(false)} 
-        symbol={symbol} 
+      <BrokerModal
+        isOpen={isBrokerModalOpen}
+        onClose={() => setIsBrokerModalOpen(false)}
+        symbol={symbol}
       />
     </GlassCard>
   );

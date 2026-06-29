@@ -16,10 +16,10 @@ import { GlassCard } from '@/components/ui/GlassCard';
 import { fetchMonthlyCandles } from '@/lib/finnhubApi';
 import styles from './PriceChart.module.css';
 
-// ── Types ────────────────────────────────────────────────────────────────────
+
 
 interface ChartPoint {
-  date: string;    // e.g. "Apr 25"
+  date: string;
   close: number;
   timestamp: number;
 }
@@ -29,7 +29,7 @@ interface PriceChartProps {
   predictedPrice?: number | null;
 }
 
-// ── Custom Tooltip ────────────────────────────────────────────────────────────
+
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const CustomTooltip: React.FC<any> = ({ active, payload }) => {
@@ -43,7 +43,7 @@ const CustomTooltip: React.FC<any> = ({ active, payload }) => {
   );
 };
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
+
 
 function formatTimestamp(ts: number): string {
   return new Date(ts * 1000).toLocaleDateString('en-US', {
@@ -57,7 +57,7 @@ function yTickFormatter(value: number): string {
   return `$${value.toFixed(0)}`;
 }
 
-// ── Main Component ────────────────────────────────────────────────────────────
+
 
 export const PriceChart: React.FC<PriceChartProps> = ({ symbol, predictedPrice }) => {
   const [data, setData] = useState<ChartPoint[]>([]);
@@ -99,7 +99,7 @@ export const PriceChart: React.FC<PriceChartProps> = ({ symbol, predictedPrice }
     loadCandles();
   }, [loadCandles]);
 
-  // ── Compute Y-domain with headroom for predicted price ───────────────────
+
   const closes = data.map((d) => d.close);
   const allValues = predictedPrice ? [...closes, predictedPrice] : closes;
   const minVal = allValues.length ? Math.min(...allValues) : 0;
@@ -110,7 +110,7 @@ export const PriceChart: React.FC<PriceChartProps> = ({ symbol, predictedPrice }
     parseFloat((maxVal + padding).toFixed(2)),
   ];
 
-  // ── Loading ──────────────────────────────────────────────────────────────
+
   if (loading) {
     return (
       <GlassCard className={styles.container}>
@@ -131,7 +131,7 @@ export const PriceChart: React.FC<PriceChartProps> = ({ symbol, predictedPrice }
     );
   }
 
-  // ── Error ────────────────────────────────────────────────────────────────
+
   if (error || data.length === 0) {
     return (
       <GlassCard className={styles.container}>
@@ -151,10 +151,10 @@ export const PriceChart: React.FC<PriceChartProps> = ({ symbol, predictedPrice }
     );
   }
 
-  // ── Chart ────────────────────────────────────────────────────────────────
+
   return (
     <GlassCard className={styles.container}>
-      {/* Header */}
+      {}
       <div className={styles.header}>
         <div className={styles.titleRow}>
           <span className={`material-symbols-outlined ${styles.icon}`}>candlestick_chart</span>
@@ -164,7 +164,7 @@ export const PriceChart: React.FC<PriceChartProps> = ({ symbol, predictedPrice }
           </div>
         </div>
 
-        {/* Prediction badge — only shown when predicted price is available */}
+        {}
         {predictedPrice != null && (
           <div className={styles.predictionBadge}>
             <span className={styles.predictionDot} />
@@ -173,7 +173,7 @@ export const PriceChart: React.FC<PriceChartProps> = ({ symbol, predictedPrice }
         )}
       </div>
 
-      {/* Chart */}
+      {}
       <div className={styles.chartWrap}>
         <ResponsiveContainer width="100%" height={280}>
           <AreaChart
@@ -219,7 +219,7 @@ export const PriceChart: React.FC<PriceChartProps> = ({ symbol, predictedPrice }
               }}
             />
 
-            {/* AI Predicted price reference line */}
+            {}
             {predictedPrice != null && (
               <ReferenceLine
                 y={predictedPrice}

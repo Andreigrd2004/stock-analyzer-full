@@ -24,7 +24,7 @@ export default function StockDetailPage({ params }: PageProps) {
   const [companyName, setCompanyName] = useState<string>('');
   const [currentPrice, setCurrentPrice] = useState<string>('');
 
-  // Fetch company name from Finnhub search
+
   useEffect(() => {
     let active = true;
     searchSymbols(symbol)
@@ -35,11 +35,11 @@ export default function StockDetailPage({ params }: PageProps) {
         );
         if (match) setCompanyName(match.description);
       })
-      .catch(() => { /* non-critical – chat still works without company name */ });
+      .catch(() => {  });
     return () => { active = false; };
   }, [symbol]);
 
-  // Fetch current price for chat context
+
   useEffect(() => {
     let active = true;
     stockApi
@@ -60,7 +60,7 @@ export default function StockDetailPage({ params }: PageProps) {
     <>
       <Header />
       <main className={styles.main}>
-        {/* Price overview + chart stacked */}
+        {}
         <div className={styles.topSection}>
           <PriceOverview symbol={symbol} />
           <PriceChart symbol={symbol} predictedPrice={predictedPrice} />
@@ -82,7 +82,7 @@ export default function StockDetailPage({ params }: PageProps) {
         </div>
       </main>
 
-      {/* Floating AI Chat – persists as long as user is on this stock page */}
+      {}
       <AiChat
         symbol={symbol}
         companyName={companyName}

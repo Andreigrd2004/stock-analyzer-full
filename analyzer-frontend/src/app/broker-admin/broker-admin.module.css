@@ -1,4 +1,4 @@
-/* ── Layout ──────────────────────────────────────── */
+
 .bgGlow {
   position: fixed;
   top: 25%;
@@ -19,7 +19,7 @@
   padding: 3rem 1rem;
 }
 
-/* ── Loading / Error states ──────────────────────────────────────────── */
+
 .loadingState {
   display: flex;
   align-items: center;
@@ -51,7 +51,7 @@
   font-size: 0.875rem;
 }
 
-/* ── Save row ─────────────────────────────────────────────────────────── */
+
 .saveRow {
   display: flex;
   align-items: center;
@@ -93,7 +93,7 @@
   color: var(--success);
 }
 
-/* ── No data fallback ─────────────────────────────────────────────────── */
+
 .noBidData {
   width: 100%;
   text-align: center;
@@ -104,7 +104,7 @@
 
 
 
-/* ── Page Header ─────────────────────────────────── */
+
 .pageHeader {
   margin-bottom: 3rem;
 }
@@ -154,7 +154,7 @@
 
 
 
-/* ── Two-column grid ─────────────────────────────── */
+
 .grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -168,7 +168,7 @@
   }
 }
 
-/* ── Glass Card ─────────────────────────────────── */
+
 .glassCard {
   background: rgba(30, 27, 75, 0.35);
   backdrop-filter: blur(20px);
@@ -183,7 +183,7 @@
 }
 
 .leftPanel {
-  /* nothing extra needed */
+
 }
 
 .rightPanel {
@@ -204,7 +204,7 @@
   pointer-events: none;
 }
 
-/* ── Card header row ─────────────────────────────── */
+
 .cardHeader {
   display: flex;
   align-items: center;
@@ -224,7 +224,7 @@
   gap: 0.5rem;
 }
 
-/* ── Toggle ─────────────────────────────────────── */
+
 .toggleLabel {
   display: flex;
   align-items: center;
@@ -279,7 +279,7 @@
   color: var(--color-text-muted);
 }
 
-/* ── Inputs ─────────────────────────────────────── */
+
 .inputs {
   display: flex;
   flex-direction: column;
@@ -333,7 +333,7 @@
   box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.2);
 }
 
-/* ── Performance Box ─────────────────────────────── */
+
 .performanceBox {
   background: rgba(9, 9, 11, 0.4);
   border: 1px solid #27272a;
@@ -398,7 +398,7 @@
   color: var(--warning);
 }
 
-/* ── Live Badge ──────────────────────────────────── */
+
 .liveBadge {
   font-size: 0.625rem;
   font-weight: 700;
@@ -420,7 +420,7 @@
   50%       { box-shadow: 0 0 18px rgba(var(--primary-rgb), 0.7); }
 }
 
-/* ── Bar Chart ──────────────────────────────────── */
+
 .chartArea {
   flex: 1;
   display: flex;
@@ -468,7 +468,7 @@
 }
 
 .barGroupYou {
-  /* extra top space for the YOU badge */
+
   padding-top: 2.5rem;
 }
 
@@ -513,7 +513,7 @@
   border-top: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-/* Tooltip on hover */
+
 .barTooltip {
   position: absolute;
   top: -2rem;
@@ -550,7 +550,7 @@
   color: var(--primary);
 }
 
-/* ── Market Insight Box ──────────────────────────── */
+
 .insightBox {
   display: flex;
   gap: 1rem;
@@ -583,7 +583,7 @@
   font-weight: 700;
 }
 
-/* ── Footer ──────────────────────────────────────── */
+
 .footer {
   border-top: 1px solid rgba(39, 39, 42, 0.5);
   margin-top: 3rem;

@@ -28,7 +28,7 @@ public class PredictionDTO {
             try {
                 symbol = p.getStock().getSymbol();
             } catch (Exception ignored) {
-                // Accessing the lazy-loaded stock symbol might fail outside of a transaction; leave symbol null in that case
+
             }
         }
         return new PredictionDTO(
@@ -42,7 +42,7 @@ public class PredictionDTO {
         );
     }
 
-    // Overloaded factory that uses a provided symbol to avoid touching lazy associations
+
     public static PredictionDTO fromEntity(Prediction p, String symbol) {
         if (p == null) return null;
         return new PredictionDTO(

@@ -1,4 +1,4 @@
-/* ─── Container ─────────────────────────────────────────────────────────────── */
+
 
 .container {
   padding: 1rem;
@@ -14,7 +14,7 @@
   }
 }
 
-/* ─── Header ────────────────────────────────────────────────────────────────── */
+
 
 .header {
   display: flex;
@@ -55,7 +55,7 @@
   align-items: center;
 }
 
-/* ─── Empty State ───────────────────────────────────────────────────────────── */
+
 
 .emptyState {
   display: flex;
@@ -88,7 +88,7 @@
   line-height: 1.6;
 }
 
-/* ─── Loading skeletons ─────────────────────────────────────────────────────── */
+
 
 .cardsGrid {
   display: grid;
@@ -119,16 +119,16 @@
   min-height: 8rem;
 }
 
-/* ─── Term Cards ────────────────────────────────────────────────────────────── */
+
 
 .termCard {
-  /* Reset button */
+
   appearance: none;
   text-align: left;
   font-family: inherit;
   cursor: pointer;
 
-  /* Layout */
+
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
@@ -165,7 +165,7 @@
   transform: translateY(-1px);
 }
 
-/* Card header row */
+
 .termCardHeader {
   display: flex;
   justify-content: space-between;
@@ -199,7 +199,7 @@
   flex: 1;
 }
 
-/* Footer */
+
 .termCardFooter {
   display: flex;
   align-items: center;
@@ -233,7 +233,7 @@
   opacity: 1;
 }
 
-/* ─── Error State ───────────────────────────────────────────────────────────── */
+
 
 .errorState {
   display: flex;
@@ -256,7 +256,7 @@
   font-weight: 400;
 }
 
-/* ─── Misc (plain string fallback) ─────────────────────────────────────────── */
+
 
 .textContent {
   color: var(--color-text);
@@ -264,7 +264,7 @@
   line-height: 1.6;
 }
 
-/* ─── Overlay + Modal ───────────────────────────────────────────────────────── */
+
 
 .overlay {
   position: fixed;
@@ -304,7 +304,7 @@
   to   { opacity: 1; transform: translateY(0)    scale(1); }
 }
 
-/* Glow blob */
+
 .modalGlow {
   position: absolute;
   top: -40%;
@@ -318,7 +318,7 @@
   pointer-events: none;
 }
 
-/* Modal header */
+
 .modalHeader {
   display: flex;
   justify-content: space-between;
@@ -386,7 +386,7 @@
   color: white;
 }
 
-/* Score bar */
+
 .scoreSection {
   padding: 0.875rem 1.25rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
@@ -427,7 +427,7 @@
   transition: width 0.5s ease;
 }
 
-/* Modal body */
+
 .modalBody {
   padding: 1.25rem;
 }

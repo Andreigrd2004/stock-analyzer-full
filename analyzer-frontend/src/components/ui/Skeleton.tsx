@@ -8,11 +8,11 @@ interface SkeletonProps {
   rounded?: 'sm' | 'md' | 'lg' | 'full';
 }
 
-export const Skeleton: React.FC<SkeletonProps> = ({ 
-  className = '', 
-  width, 
-  height, 
-  rounded = 'md' 
+export const Skeleton: React.FC<SkeletonProps> = ({
+  className = '',
+  width,
+  height,
+  rounded = 'md'
 }) => {
   const inlineStyle: React.CSSProperties = {
     width: width || '100%',
@@ -22,8 +22,8 @@ export const Skeleton: React.FC<SkeletonProps> = ({
   const roundedClass = styles[`rounded-${rounded}`];
 
   return (
-    <div 
-      className={`${styles.skeleton} ${roundedClass} ${className}`} 
+    <div
+      className={`${styles.skeleton} ${roundedClass} ${className}`}
       style={inlineStyle}
     />
   );

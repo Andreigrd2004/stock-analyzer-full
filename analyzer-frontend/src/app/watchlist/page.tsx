@@ -13,7 +13,7 @@ import { AiAnalysis } from '@/components/stock/AiAnalysis';
 import type { StockQuote, PredictionDTO } from '@/types';
 import styles from './page.module.css';
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+
 
 interface WatchlistItem {
   interestId: string;
@@ -25,18 +25,18 @@ interface WatchlistItem {
   predictionsLoading: boolean;
 }
 
-/**
- * Modal state:
- *  - symbol: the stock being viewed/generated
- *  - summary: JSON string of existing prediction (show 3 cards directly)
- *             OR null → no prediction yet, show the generate flow
- */
+
+
+
+
+
+
 interface ModalState {
   symbol: string;
   summary: string | null;
 }
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+
 
 function getActionVariant(action: string): 'success' | 'danger' | 'warning' | 'primary' {
   const a = action.toLowerCase();
@@ -46,7 +46,7 @@ function getActionVariant(action: string): 'success' | 'danger' | 'warning' | 'p
   return 'primary';
 }
 
-// ─── Component ────────────────────────────────────────────────────────────────
+
 
 export default function WatchlistPage() {
   const [items, setItems]     = useState<WatchlistItem[]>([]);
@@ -56,7 +56,7 @@ export default function WatchlistPage() {
 
   const userId = '1';
 
-  // Close modal on Escape
+
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') handleCloseModal(); };
     window.addEventListener('keydown', handler);
@@ -71,7 +71,7 @@ export default function WatchlistPage() {
       try {
         setLoading(true);
 
-        // 1. Fetch user watchlist symbols
+
         let symbols: string[] = [];
         try {
           const remote = await userApi.getWatchlist();
@@ -90,7 +90,7 @@ export default function WatchlistPage() {
 
         if (!active) return;
 
-        // 2. Build initial items (all in loading state)
+
         const initial: WatchlistItem[] = symbols.map(sym => ({
           interestId: sym,
           symbol: sym,
@@ -100,7 +100,7 @@ export default function WatchlistPage() {
         setItems(initial);
         setLoading(false);
 
-        // 3. Fetch quotes in parallel
+
         initial.forEach(async (item) => {
           try {
             const res = await stockApi.getPriceChange(item.symbol);
@@ -134,7 +134,7 @@ export default function WatchlistPage() {
           }
         });
 
-        // 4. Fetch all predictions in a single batch call
+
         if (symbols.length > 0) {
           try {
             const predRes = await stockApi.getRelatedPredictions({ stockSymbols: symbols });
@@ -168,10 +168,10 @@ export default function WatchlistPage() {
     catch (e) { console.warn('Remove failed', e); }
   };
 
-  /**
-   * Called when the modal is closed. If it was in generate mode (summary was null),
-   * re-fetch the prediction for that stock so the card updates without a full reload.
-   */
+
+
+
+
   const handleCloseModal = async () => {
     const wasGenerating = modal && modal.summary === null;
     const symbol = modal?.symbol;
@@ -193,14 +193,14 @@ export default function WatchlistPage() {
     }
   };
 
-  // ── Render ──────────────────────────────────────────────────────────────────
+
 
   return (
     <>
       <Header activePage="watchlist" />
       <main className={styles.main}>
 
-        {/* ── Page Title */}
+        {}
         <div className={styles.headerRow}>
           <h1 className={styles.title}>
             <span className={`material-symbols-outlined ${styles.starIcon}`}>star</span>
@@ -208,14 +208,14 @@ export default function WatchlistPage() {
           </h1>
         </div>
 
-        {/* ── Error */}
+        {}
         {error && (
           <GlassCard>
             <div className={styles.emptyState}>{error}</div>
           </GlassCard>
         )}
 
-        {/* ── Initial skeleton grid */}
+        {}
         {!error && loading && (
           <div className={styles.gridContainer}>
             {[1, 2, 3].map(n => (
@@ -232,7 +232,7 @@ export default function WatchlistPage() {
           </div>
         )}
 
-        {/* ── Empty */}
+        {}
         {!error && !loading && items.length === 0 && (
           <GlassCard>
             <div className={styles.emptyState}>
@@ -241,7 +241,7 @@ export default function WatchlistPage() {
           </GlassCard>
         )}
 
-        {/* ── Stock Cards */}
+        {}
         {!error && !loading && items.length > 0 && (
           <div className={styles.gridContainer}>
             {items.map(item => {
@@ -257,7 +257,7 @@ export default function WatchlistPage() {
 
                   <div className={styles.cardInner}>
 
-                    {/* ── Header row: avatar + symbol + action badge */}
+                    {}
                     <div className={styles.cardHeader}>
                       <div className={styles.assetCol}>
                         <div className={styles.assetAvatar}>
@@ -280,7 +280,7 @@ export default function WatchlistPage() {
                       </div>
                     </div>
 
-                    {/* ── Price section */}
+                    {}
                     <div className={styles.priceSection}>
                       <div className={styles.priceCol}>
                         <span className={styles.priceLabel}>Current Price</span>
@@ -307,7 +307,7 @@ export default function WatchlistPage() {
                       </div>
                     </div>
 
-                    {/* ── Prediction strip — always rendered to keep equal card height */}
+                    {}
                     <div className={styles.predictionStrip}>
                       {hasPrediction ? (
                         <>
@@ -334,10 +334,10 @@ export default function WatchlistPage() {
                       )}
                     </div>
 
-                    {/* ── Actions row */}
+                    {}
                     <div className={styles.cardActions}>
                       {hasPrediction ? (
-                        /* View existing prediction */
+
                         <Button
                           variant="primary"
                           onClick={() => setModal({ symbol: item.symbol, summary: item.prediction!.summary })}
@@ -348,7 +348,7 @@ export default function WatchlistPage() {
                           More Details
                         </Button>
                       ) : !item.predictionsLoading ? (
-                        /* Generate a new prediction */
+
                         <Button
                           variant="primary"
                           onClick={() => setModal({ symbol: item.symbol, summary: null })}
@@ -362,7 +362,7 @@ export default function WatchlistPage() {
                         <div />
                       )}
 
-                      {/* Right: analytics link + delete */}
+                      {}
                       <div className={styles.actionBtnsRight}>
                         <Link href={`/stock/${item.symbol}`}>
                           <Button variant="ghost" className={styles.iconBtn} title="View Analytics">
@@ -389,7 +389,7 @@ export default function WatchlistPage() {
 
       </main>
 
-      {/* ── AI Analysis Modal ──────────────────────────────────────────────────── */}
+      {}
       {modal && (
         <div
           className={styles.modalOverlay}
@@ -402,7 +402,7 @@ export default function WatchlistPage() {
             className={styles.modalContainer}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Modal header */}
+            {}
             <div className={styles.modalHeader}>
               <div className={styles.modalTitleRow}>
                 <span
@@ -427,7 +427,7 @@ export default function WatchlistPage() {
               </button>
             </div>
 
-            {/* AiAnalysis: pass initialData when viewing existing, or nothing to trigger generate flow */}
+            {}
             <div className={styles.modalBody}>
               <AiAnalysis
                 symbol={modal.symbol}

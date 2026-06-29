@@ -31,7 +31,7 @@ export function TrendingMarkets() {
 
   useEffect(() => {
     let isMounted = true;
-    
+
     const fetchQuotes = async () => {
       setLoading(true);
       try {
@@ -57,12 +57,12 @@ export function TrendingMarkets() {
                   calculatedPercentChange = ((currentPrice - prevClose) / prevClose) * 100;
                 }
 
-                return { 
-                  ...market, 
-                  c: currentPrice, 
-                  pc: prevClose, 
+                return {
+                  ...market,
+                  c: currentPrice,
+                  pc: prevClose,
                   percentChange: calculatedPercentChange,
-                  error: false 
+                  error: false
                 };
               }
               return { ...market, error: true };
@@ -72,7 +72,7 @@ export function TrendingMarkets() {
             }
           })
         );
-        
+
         if (isMounted) {
           setMarkets(results);
           setLoading(false);
@@ -97,7 +97,7 @@ export function TrendingMarkets() {
         <span className="material-symbols-outlined" style={{ color: 'var(--primary)' }}>star</span>
         Trending Markets
       </h2>
-      
+
       {loading ? (
         <div className={styles.loadingContainer}>
           <span style={{ color: 'var(--color-text-muted)' }}>Loading market data...</span>

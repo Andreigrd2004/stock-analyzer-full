@@ -6,7 +6,7 @@ from app import app
 
 
 def fake_predict_with_subprocess(x_test):
-    # Return a simple constant normalized value for all windows.
+
     return np.full((x_test.shape[0], 1), 0.75, dtype=float)
 
 
@@ -19,7 +19,7 @@ def fake_download(*args, **kwargs):
 def main():
     with patch("app.yf.download", side_effect=fake_download), patch("app.predict_with_subprocess", side_effect=fake_predict_with_subprocess):
         client = app.test_client()
-        # Test POST endpoint
+
         response = client.post("/api/v1/predictions/price", json={"ticker": "AAPL"})
         body = response.get_json()
         print("POST /api/v1/predictions/price")
@@ -33,7 +33,7 @@ def main():
         if len(body.keys()) != 1:
             raise SystemExit(1)
 
-        # Test GET endpoint
+
         response = client.get("/api/v1/predictions/price?ticker=AAPL")
         body = response.get_json()
         print("\nGET /api/v1/predictions/price?ticker=AAPL")

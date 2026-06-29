@@ -1,10 +1,10 @@
 export interface StockQuote {
-  c: number; // current
-  h: number; // high
-  l: number; // low
-  o: number; // open
-  pc: number; // previous close
-  t: number; // timestamp
+  c: number;
+  h: number;
+  l: number;
+  o: number;
+  pc: number;
+  t: number;
 }
 
 export interface NewsItem {
@@ -57,7 +57,7 @@ export interface AiAnalysisResponse {
   short_term?: AiTermAnalysis;
   medium_term?: AiTermAnalysis;
   long_term?: AiTermAnalysis;
-  predicted?: number;  // Actual price target from the backend ML model
+  predicted?: number;
 }
 
 export interface PredictionDTO {
@@ -79,7 +79,7 @@ export interface PredictionsListRequest {
 }
 
 export interface UserStockInterest {
-  id: string; // or number depending on backend
+  id: string;
   symbol: string;
 }
 
@@ -90,7 +90,7 @@ export interface AuthResponse {
 
 export interface LoginPayload {
   username: string;
-  password?: string; // Optional if you handle OAuth
+  password?: string;
 }
 
 export interface RegisterPayload {
@@ -101,10 +101,10 @@ export interface RegisterPayload {
 }
 
 export interface FinnhubSearchResult {
-  description: string;   // e.g. "Apple Inc"
-  displaySymbol: string; // e.g. "AAPL"
-  symbol: string;        // e.g. "AAPL"
-  type: string;          // e.g. "Common Stock"
+  description: string;
+  displaySymbol: string;
+  symbol: string;
+  type: string;
 }
 
 export interface FinnhubSearchResponse {
@@ -113,23 +113,23 @@ export interface FinnhubSearchResponse {
 }
 
 export interface FinnhubCandleResponse {
-  c: number[];           // close prices
-  h: number[];           // high prices
-  l: number[];           // low prices
-  o: number[];           // open prices
-  t: number[];           // unix timestamps (seconds)
-  v: number[];           // volumes
-  s: 'ok' | 'no_data';  // status
+  c: number[];
+  h: number[];
+  l: number[];
+  o: number[];
+  t: number[];
+  v: number[];
+  s: 'ok' | 'no_data';
 }
 
-// ── Broker ────────────────────────────────────────────────────────────────────
+
 
 export interface Broker {
   id: number;
   userId: number;
   companyName: string;
   redirectUrl: string;
-  bidAmount: string;    // BigDecimal serialised as string by Jackson
+  bidAmount: string;
   dailyBudget: string;
   active: boolean;
 }
@@ -151,12 +151,12 @@ export interface BrokerUpdateRequest {
   active?: boolean;
 }
 
-// ── BrokerClick ───────────────────────────────────────────────────────────────
+
 
 export interface BrokerClick {
   id: number;
   brokerId: number;
-  clickedAt: string;    // ISO-8601 timestamp
+  clickedAt: string;
   stockSymbol?: string;
 }
 

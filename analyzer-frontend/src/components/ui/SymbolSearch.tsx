@@ -14,7 +14,7 @@ import { Button } from './Button';
 import styles from './SymbolSearch.module.css';
 
 interface SymbolSearchProps {
-  /** Called when a result is selected (click or Enter). Receives the ticker symbol. */
+
   onSelect?: (symbol: string) => void;
   placeholder?: string;
 }
@@ -36,9 +36,9 @@ export function SymbolSearch({
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const abortRef = useRef<AbortController | null>(null);
 
-  // ── Search logic ────────────────────────────────────────────────────────
+
   const runSearch = useCallback(async (q: string) => {
-    // Cancel any in-flight request
+
     if (abortRef.current) {
       abortRef.current.abort();
     }
@@ -52,7 +52,7 @@ export function SymbolSearch({
       setOpen(data.length > 0);
       setActiveIdx(-1);
     } catch (err: unknown) {
-      // AbortError is expected — ignore it
+
       if (err instanceof Error && err.name !== 'AbortError') {
         console.error('Symbol search error:', err.message);
         setResults([]);
@@ -63,7 +63,7 @@ export function SymbolSearch({
     }
   }, []);
 
-  // ── Debounce on query change ─────────────────────────────────────────────
+
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
 
@@ -83,7 +83,7 @@ export function SymbolSearch({
     };
   }, [query, runSearch]);
 
-  // ── Outside click ───────────────────────────────────────────────────────
+
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) {
@@ -94,7 +94,7 @@ export function SymbolSearch({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // ── Item selection ──────────────────────────────────────────────────────
+
   function handleSelect(result: FinnhubSearchResult) {
     setQuery(result.displaySymbol);
     setOpen(false);
@@ -102,7 +102,7 @@ export function SymbolSearch({
     onSelect?.(result.symbol);
   }
 
-  // ── Keyboard navigation ─────────────────────────────────────────────────
+
   function handleKeyDown(e: KeyboardEvent<HTMLInputElement>) {
     if (!open) return;
 
@@ -122,7 +122,7 @@ export function SymbolSearch({
     }
   }
 
-  // ── Manual submit (Analyze button) ─────────────────────────────────────
+
   function handleAnalyze() {
     const sym = query.trim().toUpperCase();
     if (!sym) return;
@@ -157,7 +157,7 @@ export function SymbolSearch({
           Analyze
         </Button>
 
-        {/* Inline spinner */}
+        {}
         {loading && (
           <span className={styles.spinnerWrap} aria-hidden="true">
             <span className={styles.spinner} />
@@ -165,7 +165,7 @@ export function SymbolSearch({
         )}
       </div>
 
-      {/* Dropdown */}
+      {}
       {open && (
         <div className={styles.dropdown} role="listbox" aria-label="Symbol suggestions">
           {results.length === 0 ? (
@@ -178,7 +178,7 @@ export function SymbolSearch({
                 aria-selected={idx === activeIdx}
                 className={`${styles.item} ${idx === activeIdx ? styles.itemActive : ''}`}
                 onMouseDown={(e) => {
-                  // mousedown fires before input blur, so we prevent blur first
+
                   e.preventDefault();
                   handleSelect(r);
                 }}

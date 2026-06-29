@@ -6,22 +6,22 @@ export interface AddInterestRequest {
 }
 
 export interface UserInterestsResponse {
-  // Assuming it might have an interests array or just be an array
+
   interests?: any[];
   [key: string]: any;
 }
 
 export const userApi = {
-  getWatchlist: () => 
+  getWatchlist: () =>
     fetchApi<any>('/interests'),
-  
-  addToWatchlist: (stockName: string) => 
+
+  addToWatchlist: (stockName: string) =>
     fetchApi<any>('/interests', {
       method: 'POST',
       body: JSON.stringify({ stockName }),
     }),
-  
-  removeFromWatchlist: (stockName: string) => 
+
+  removeFromWatchlist: (stockName: string) =>
     fetchApi<void>(`/interests/${stockName}`, {
       method: 'DELETE',
     }),

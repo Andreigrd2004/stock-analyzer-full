@@ -9,7 +9,7 @@ import { stockApi } from '@/lib/stockApi';
 import type { AiAnalysisResponse, AiTermAnalysis } from '@/types';
 import styles from './AiAnalysis.module.css';
 
-// ── helpers ──────────────────────────────────────────────────────────────────
+
 
 interface TermMeta {
   label: string;
@@ -49,13 +49,13 @@ function sentimentFromScore(score: number): { variant: 'success' | 'danger' | 'w
   return { variant: 'danger', label: 'Sell' };
 }
 
-/** Truncate text to a given character limit */
+
 function truncate(text: string, limit = 120) {
   if (text.length <= limit) return text;
   return text.slice(0, limit).trimEnd() + '…';
 }
 
-// ── sub-components ────────────────────────────────────────────────────────────
+
 
 interface TermCardProps {
   termData: AiTermAnalysis;
@@ -79,7 +79,7 @@ const TermCard: React.FC<TermCardProps> = ({ termData, meta, onClick }) => {
       onClick={onClick}
       aria-label={`Open ${meta.label} analysis`}
     >
-      {/* Top row */}
+      {}
       <div className={styles.termCardHeader}>
         <div className={styles.termCardIcon}>
           <span className="material-symbols-outlined">{meta.icon}</span>
@@ -89,13 +89,13 @@ const TermCard: React.FC<TermCardProps> = ({ termData, meta, onClick }) => {
         </Badge>
       </div>
 
-      {/* Title */}
+      {}
       <p className={styles.termCardLabel}>{meta.label}</p>
 
-      {/* Preview */}
+      {}
       <p className={styles.termCardPreview}>{truncate(termData.detailed_reasoning)}</p>
 
-      {/* Footer CTA */}
+      {}
       <div className={styles.termCardFooter}>
         <span className={styles.readMore}>Read full analysis</span>
         <span className={`material-symbols-outlined ${styles.arrowIcon}`}>arrow_forward</span>
@@ -104,7 +104,7 @@ const TermCard: React.FC<TermCardProps> = ({ termData, meta, onClick }) => {
   );
 };
 
-// ── modal ─────────────────────────────────────────────────────────────────────
+
 
 interface ModalProps {
   termData: AiTermAnalysis;
@@ -115,7 +115,7 @@ interface ModalProps {
 const AnalysisModal: React.FC<ModalProps> = ({ termData, meta, onClose }) => {
   const { variant, label } = sentimentFromScore(termData.score);
 
-  // Close on Escape
+
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -136,10 +136,10 @@ const AnalysisModal: React.FC<ModalProps> = ({ termData, meta, onClose }) => {
           } as React.CSSProperties
         }
       >
-        {/* Glow blob */}
+        {}
         <div className={styles.modalGlow} />
 
-        {/* Header */}
+        {}
         <div className={styles.modalHeader}>
           <div className={styles.modalTitleRow}>
             <div
@@ -164,7 +164,7 @@ const AnalysisModal: React.FC<ModalProps> = ({ termData, meta, onClose }) => {
           </div>
         </div>
 
-        {/* Score bar */}
+        {}
         <div className={styles.scoreSection}>
           <div className={styles.scoreLabelRow}>
             <span className={styles.scoreLabel}>Conviction Score</span>
@@ -182,7 +182,7 @@ const AnalysisModal: React.FC<ModalProps> = ({ termData, meta, onClose }) => {
           </div>
         </div>
 
-        {/* Full reasoning */}
+        {}
         <div className={styles.modalBody}>
           <p className={styles.modalBodyLabel}>Detailed Reasoning</p>
           <p className={styles.modalBodyText}>{termData.detailed_reasoning}</p>
@@ -192,7 +192,7 @@ const AnalysisModal: React.FC<ModalProps> = ({ termData, meta, onClose }) => {
   );
 };
 
-// ── main component ────────────────────────────────────────────────────────────
+
 
 export const AiAnalysis: React.FC<{ symbol: string; onPrediction?: (price: number) => void; initialData?: string | AiAnalysisResponse }> = ({ symbol, onPrediction, initialData }) => {
   const [analysis, setAnalysis] = useState<AiAnalysisResponse | string | null>(null);
@@ -200,7 +200,7 @@ export const AiAnalysis: React.FC<{ symbol: string; onPrediction?: (price: numbe
   const [error, setError] = useState<string | null>(null);
   const [openTerm, setOpenTerm] = useState<null | 0 | 1 | 2>(null);
 
-  // If initial data is provided (from watchlist), parse and display immediately
+
   useEffect(() => {
     if (!initialData) return;
     if (typeof initialData === 'string') {
@@ -208,7 +208,7 @@ export const AiAnalysis: React.FC<{ symbol: string; onPrediction?: (price: numbe
         const parsed = JSON.parse(initialData);
         setAnalysis(parsed);
       } catch {
-        // If it's not valid JSON, treat as plain text
+
         setAnalysis(initialData);
       }
     } else {
@@ -222,7 +222,7 @@ export const AiAnalysis: React.FC<{ symbol: string; onPrediction?: (price: numbe
       setError(null);
       const data = await stockApi.getAiAnalysis(symbol);
       setAnalysis(data);
-      // Forward predicted price to parent if present
+
       if (data && typeof data === 'object' && typeof data.predicted === 'number') {
         onPrediction?.(data.predicted);
       }
@@ -233,13 +233,13 @@ export const AiAnalysis: React.FC<{ symbol: string; onPrediction?: (price: numbe
     }
   }, [symbol, onPrediction]);
 
-  // Derive term data array for structured responses
+
   const terms: (AiTermAnalysis | undefined)[] =
     analysis && typeof analysis === 'object'
       ? [analysis.short_term, analysis.medium_term, analysis.long_term]
       : [undefined, undefined, undefined];
 
-  // ── empty / generate state ────────────────────────────────────────────────
+
   if (!analysis && !loading && !error) {
     return (
       <GlassCard className={styles.container}>

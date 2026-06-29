@@ -27,7 +27,7 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const passwordError = validatePassword(password);
     if (passwordError) {
       setError(passwordError);
@@ -61,7 +61,7 @@ export default function RegisterPage() {
   return (
     <main className={styles.main}>
       <div className={styles.bgGlow} />
-      
+
       <GlassCard className={styles.card} glow="primary">
         <div className={styles.header}>
           <Link href="/" className={styles.logo}>
@@ -75,14 +75,14 @@ export default function RegisterPage() {
 
         <form className={styles.form} onSubmit={handleSubmit}>
           {error && <div style={{ color: 'var(--danger)', fontSize: '0.875rem', textAlign: 'center' }}>{error}</div>}
-          
+
           <div className={styles.inputGroup}>
             <label htmlFor="displayName" className={styles.label}>Full Name</label>
-            <TextInput 
+            <TextInput
               id="displayName"
-              type="text" 
-              icon="person" 
-              placeholder="John Doe" 
+              type="text"
+              icon="person"
+              placeholder="John Doe"
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
               required
@@ -91,11 +91,11 @@ export default function RegisterPage() {
 
           <div className={styles.inputGroup}>
             <label htmlFor="username" className={styles.label}>Username</label>
-            <TextInput 
+            <TextInput
               id="username"
-              type="text" 
-              icon="badge" 
-              placeholder="johndoe" 
+              type="text"
+              icon="badge"
+              placeholder="johndoe"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
@@ -104,24 +104,24 @@ export default function RegisterPage() {
 
           <div className={styles.inputGroup}>
             <label htmlFor="email" className={styles.label}>Email Address</label>
-            <TextInput 
+            <TextInput
               id="email"
-              type="email" 
-              icon="mail" 
-              placeholder="name@example.com" 
+              type="email"
+              icon="mail"
+              placeholder="name@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
-          
+
           <div className={styles.inputGroup}>
             <label htmlFor="password" className={styles.label}>Password</label>
-            <TextInput 
+            <TextInput
               id="password"
-              type="password" 
-              icon="lock" 
-              placeholder="Create a strong password" 
+              type="password"
+              icon="lock"
+              placeholder="Create a strong password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
