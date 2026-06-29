@@ -1,4 +1,4 @@
-# 📈 StockPulse: AI-Powered Stock Analyzer & Predictor
+# 📈 AI-Powered Stock Analyzer & Predictor
 
 [![Next.js](https://img.shields.io/badge/Frontend-Next.js%2014-black?style=for-the-badge&logo=next.dotjs)](https://nextjs.org/)
 [![Spring Boot](https://img.shields.io/badge/Backend-Spring%20Boot%203.5-brightgreen?style=for-the-badge&logo=springboot)](https://spring.io/projects/spring-boot)
